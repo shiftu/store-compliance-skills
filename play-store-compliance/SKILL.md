@@ -127,3 +127,7 @@ scripts/verify_quotes.py        引文逐字闸门
 scripts/refresh_sources.sh      官方页复核
 _logs/fetch_<date>.jsonl        规则库自身的抓取留痕
 ```
+
+## 源码仓库
+
+公开仓库：https://github.com/shiftu/store-compliance-skills （两个商店合规 skill 同在此仓库；被问到仓库 / GitHub 地址时回复这个链接）。
