@@ -1,0 +1,39 @@
+{"ts": "2026-11-23T23:55:24-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/topic/9858052", "status": "ok", "used_for": "Play Policy Center 索引"}
+{"ts": "2026-11-23T23:55:39-06:00", "tool": "fetch", "query_or_url": "https://play.google/developer-content-policy/", "status": "ok", "used_for": "Play 政策总览页(含全部政策链接)"}
+{"ts": "2026-11-23T23:58:15-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/9888076", "status": "ok", "used_for": "用户数据政策（收集/共享/敏感数据/隐私政策）"}
+{"ts": "2026-11-23T23:58:20-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/10787469", "status": "ok", "used_for": "Data safety 表单（数据安全声明）"}
+{"ts": "2026-11-23T23:58:25-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/9900533", "status": "ok", "used_for": "订阅政策（免费试用/自动续订/披露）"}
+{"ts": "2026-11-23T23:58:32-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/9858738", "status": "ok", "used_for": "支付政策（Google Play 结算）"}
+{"ts": "2026-11-23T23:58:40-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/13985936", "status": "ok", "used_for": "AI 生成内容政策"}
+{"ts": "2026-11-23T23:58:51-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/9888077", "status": "ok", "used_for": "欺骗行为政策"}
+{"ts": "2026-11-23T23:58:57-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/9888689", "status": "ok", "used_for": "虚假陈述政策"}
+{"ts": "2026-11-23T23:59:03-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/9899034", "status": "ok", "used_for": "垃圾内容与重复内容政策"}
+{"ts": "2026-11-23T23:59:09-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/9898783", "status": "ok", "used_for": "功能性、内容与用户体验政策"}
+{"ts": "2026-11-23T23:59:15-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/9898842", "status": "ok", "used_for": "元数据政策（标题/图标/截图/描述）"}
+{"ts": "2026-11-23T23:59:21-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/9898843", "status": "ok", "used_for": "内容分级（IARC）要求"}
+{"ts": "2026-11-23T23:59:36-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/9878878", "status": "ok", "used_for": "健康内容与服务政策"}
+{"ts": "2026-11-23T23:59:44-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/9893335", "status": "ok", "used_for": "家庭政策（面向儿童）"}
+{"ts": "2026-11-23T23:59:50-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/16302250", "status": "ok", "used_for": "年龄限制内容与功能"}
+{"ts": "2026-11-23T23:59:57-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/9876937", "status": "ok", "used_for": "用户生成内容政策"}
+{"ts": "2026-11-24T00:00:04-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/9888374", "status": "ok", "used_for": "冒充他人政策"}
+{"ts": "2026-11-24T00:00:10-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/9857753", "status": "ok", "used_for": "广告政策"}
+{"ts": "2026-11-24T00:00:14-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/9899234", "status": "ok", "used_for": "执行流程（下架/终止/关联账号）"}
+{"ts": "2026-11-24T00:00:20-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/9899142", "status": "ok", "used_for": "违规管理与申诉"}
+{"ts": "2026-11-24T00:00:28-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/9899816", "status": "ok", "used_for": "政策覆盖范围"}
+{"ts": "2026-11-24T00:00:36-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/9878809", "status": "ok", "used_for": "危害儿童政策"}
+{"ts": "2026-11-24T00:00:44-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/9878877", "status": "ok", "used_for": "非法活动政策"}
+{"ts": "2026-11-24T00:00:49-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/9878810", "status": "ok", "used_for": "不当内容政策（性/暴力/仇恨）"}
+{"ts": "2026-11-24T00:00:56-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/9876821", "status": "ok", "used_for": "金融服务政策（涉及订阅/金融合规）"}
+{"ts": "2026-11-24T00:01:32-06:00", "tool": "search", "query_or_url": "site:support.google.com android developer verification requirement Google Play 2026", "status": "ok", "used_for": "Play 开发者身份验证要求"}
+{"ts": "2026-11-24T00:01:47-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/18100766", "status": "ok", "used_for": "政策公告 2026-10-29（最新一批变更）"}
+{"ts": "2026-11-24T00:01:53-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/16926792", "status": "ok", "used_for": "政策公告 2026-04-15"}
+{"ts": "2026-11-24T00:01:59-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/17134731", "status": "ok", "used_for": "政策公告 2026-07-15（含 target API/开发者验证）"}
+{"ts": "2026-11-24T00:02:06-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/table/12921780", "status": "ok", "used_for": "政策截止日期表（近12个月生效日期）"}
+{"ts": "2026-11-24T00:02:10-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/13386702", "status": "ok", "used_for": "政策更新归档"}
+{"ts": "2026-11-24T00:02:18-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/16984799", "status": "ok", "used_for": "Play 包名注册（2026-09-30 起强制）"}
+{"ts": "2026-11-24T00:02:24-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/10841920", "status": "ok", "used_for": "开发者身份验证"}
+{"ts": "2026-11-24T00:04:38-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/17594752", "status": "ok", "used_for": "Play 交易者身份声明（2026-11 起强制，EU DSA）"}
+{"ts": "2026-11-24T00:04:52-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/18204939", "status": "ok", "used_for": "订阅资格类折扣披露（2027-01-27 生效）"}
+{"ts": "2026-11-24T00:04:57-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/10281818", "status": "ok", "used_for": "支付政策补充指引（含 AI agentic 体验）"}
+{"ts": "2026-11-24T00:05:02-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/16558241", "status": "ok", "used_for": "敏感权限与 API 政策（位置/全文件/无障碍）"}
+{"ts": "2026-11-24T00:26:43-06:00", "tool": "fetch", "query_or_url": "https://support.google.com/googleplay/android-developer/answer/18265346", "status": "ok", "used_for": "Play Developer Program 政策全文（2026-10-29 生效版），用于条款措辞核实"}

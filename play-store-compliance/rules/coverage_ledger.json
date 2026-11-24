@@ -1,0 +1,1967 @@
+{
+  "apple": [
+    {
+      "key": "1.1",
+      "title": "Objectionable Content",
+      "mode": "human",
+      "dest": [],
+      "reason": "内容禁止项：需应用内实际内容判定，商店页只见描述"
+    },
+    {
+      "key": "1.1.2",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "内容禁止项：需应用内实际内容判定，商店页只见描述"
+    },
+    {
+      "key": "1.1.3",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "内容禁止项：需应用内实际内容判定，商店页只见描述"
+    },
+    {
+      "key": "1.1.4",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "内容禁止项：需应用内实际内容判定，商店页只见描述"
+    },
+    {
+      "key": "1.1.5",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "内容禁止项：需应用内实际内容判定，商店页只见描述"
+    },
+    {
+      "key": "1.1.6",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "内容禁止项：需应用内实际内容判定，商店页只见描述"
+    },
+    {
+      "key": "1.1.7",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "内容禁止项：需应用内实际内容判定，商店页只见描述"
+    },
+    {
+      "key": "1.2",
+      "title": "User-Generated Content",
+      "mode": "rule",
+      "dest": [
+        "ASRG-1.2-UGC",
+        "ASRG-1.2-RANDOM-CHAT"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "1.2.1",
+      "title": "Creator Content",
+      "mode": "rule",
+      "dest": [
+        "ASRG-1.2.1a-AGE-GATE"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "1.3",
+      "title": "Kids Category",
+      "mode": "rule",
+      "dest": [
+        "ASRG-1.3-KIDS"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "1.4",
+      "title": "Physical Harm",
+      "mode": "human",
+      "dest": [],
+      "reason": "人身伤害相关内容：需产品实际功能判定"
+    },
+    {
+      "key": "1.4.1",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "ASRG-1.4.1-MEDICAL"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "1.4.2",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "人身伤害相关内容：需产品实际功能判定"
+    },
+    {
+      "key": "1.4.3",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "人身伤害相关内容：需产品实际功能判定"
+    },
+    {
+      "key": "1.4.4",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "人身伤害相关内容：需产品实际功能判定"
+    },
+    {
+      "key": "1.4.5",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "人身伤害相关内容：需产品实际功能判定"
+    },
+    {
+      "key": "1.5",
+      "title": "Developer Information",
+      "mode": "rule",
+      "dest": [
+        "ASRG-1.5-SUPPORT"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "1.6",
+      "title": "Data Security",
+      "mode": "human",
+      "dest": [],
+      "reason": "数据安全实现：需安装包或渗透测试"
+    },
+    {
+      "key": "1.7",
+      "title": "Reporting Criminal Activity",
+      "mode": "human",
+      "dest": [],
+      "reason": "犯罪活动举报流程：需联系与响应记录"
+    },
+    {
+      "key": "2.1",
+      "title": "App Completeness",
+      "mode": "rule",
+      "dest": [
+        "ASRG-2.1-COMPLETE"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "2.2",
+      "title": "Beta Testing",
+      "mode": "human",
+      "dest": [],
+      "reason": "Beta 测试：TestFlight 与内部轨道外部不可见"
+    },
+    {
+      "key": "2.3",
+      "title": "Accurate Metadata",
+      "mode": "human",
+      "dest": [],
+      "reason": "元数据/功能：条款不落在商店页可见面"
+    },
+    {
+      "key": "2.3.1",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "ASRG-2.1-COMPLETE"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "2.3.2",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "ASRG-2.3.2-IAP-DISCLOSURE"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "2.3.3",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "ASRG-2.3.3-SCREENSHOTS"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "2.3.4",
+      "title": "",
+      "mode": "vision",
+      "dest": [],
+      "reason": "预览视频内容，需下载视频判读；尚未建规则"
+    },
+    {
+      "key": "2.3.5",
+      "title": "",
+      "mode": "vision",
+      "dest": [],
+      "reason": "截图选取与顺序（是否误导），需看图；尚未建规则"
+    },
+    {
+      "key": "2.3.6",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "ASRG-2.3.6-AGE-RATING",
+        "ASRG-AGE-RATING-FORM"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "2.3.7",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "ASRG-2.3.7-NAME"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "2.3.8",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "ASRG-2.3.8-META-4PLUS"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "2.3.9",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "元数据细节：需图片/更新说明/权利材料"
+    },
+    {
+      "key": "2.3.10",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "ASRG-2.3.10-OTHERPLATFORMS"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "2.3.11",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "元数据细节：需图片/更新说明/权利材料"
+    },
+    {
+      "key": "2.3.12",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "元数据细节：需图片/更新说明/权利材料"
+    },
+    {
+      "key": "2.3.13",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "元数据细节：需图片/更新说明/权利材料"
+    },
+    {
+      "key": "2.3.14",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "ASRG-2.3.14-ASSETS"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "2.4",
+      "title": "Hardware Compatibility",
+      "mode": "human",
+      "dest": [],
+      "reason": "硬件兼容：需真机"
+    },
+    {
+      "key": "2.4.1",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "硬件兼容：需真机"
+    },
+    {
+      "key": "2.4.2",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "硬件兼容：需真机"
+    },
+    {
+      "key": "2.4.3",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "硬件兼容：需真机"
+    },
+    {
+      "key": "2.4.4",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "硬件兼容：需真机"
+    },
+    {
+      "key": "2.4.5",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "硬件兼容：需真机"
+    },
+    {
+      "key": "2.5",
+      "title": "Software Requirements",
+      "mode": "human",
+      "dest": [],
+      "reason": "软件要求：需安装包与审核备注"
+    },
+    {
+      "key": "2.5.1",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "软件要求：需安装包与审核备注"
+    },
+    {
+      "key": "2.5.2",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "软件要求：需安装包与审核备注"
+    },
+    {
+      "key": "2.5.3",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "软件要求：需安装包与审核备注"
+    },
+    {
+      "key": "2.5.4",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "软件要求：需安装包与审核备注"
+    },
+    {
+      "key": "2.5.5",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "软件要求：需安装包与审核备注"
+    },
+    {
+      "key": "2.5.6",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "软件要求：需安装包与审核备注"
+    },
+    {
+      "key": "2.5.7",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "软件要求：需安装包与审核备注"
+    },
+    {
+      "key": "2.5.8",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "软件要求：需安装包与审核备注"
+    },
+    {
+      "key": "2.5.9",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "软件要求：需安装包与审核备注"
+    },
+    {
+      "key": "2.5.10",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "软件要求：需安装包与审核备注"
+    },
+    {
+      "key": "2.5.11",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "软件要求：需安装包与审核备注"
+    },
+    {
+      "key": "2.5.12",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "软件要求：需安装包与审核备注"
+    },
+    {
+      "key": "2.5.13",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "软件要求：需安装包与审核备注"
+    },
+    {
+      "key": "2.5.14",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "软件要求：需安装包与审核备注"
+    },
+    {
+      "key": "2.5.15",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "软件要求：需安装包与审核备注"
+    },
+    {
+      "key": "2.5.16",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "软件要求：需安装包与审核备注"
+    },
+    {
+      "key": "2.5.17",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "软件要求：需安装包与审核备注"
+    },
+    {
+      "key": "2.5.18",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "软件要求：需安装包与审核备注"
+    },
+    {
+      "key": "2.5.19",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "ASRG-2.5.19-HIDDEN"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "3.1",
+      "title": "Payments",
+      "mode": "human",
+      "dest": [],
+      "reason": "业务条款：需后台/合同/地区配置"
+    },
+    {
+      "key": "3.1.1",
+      "title": "In-App Purchase:",
+      "mode": "rule",
+      "dest": [
+        "ASRG-3.1.1-IAP"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "3.1.2",
+      "title": "Subscriptions:",
+      "mode": "rule",
+      "dest": [
+        "ASRG-3.1.2c-SUBINFO",
+        "ASRG-SUB-CHECKLIST",
+        "ASRG-3.1.2a-ONGOING",
+        "ASRG-3.1.2-SCAM"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "3.1.3",
+      "title": "Other Purchase Methods:",
+      "mode": "human",
+      "dest": [],
+      "reason": "其他购买方式/加密/内容访问：需安装包与地区配置"
+    },
+    {
+      "key": "3.1.4",
+      "title": "Hardware-Specific Content:",
+      "mode": "human",
+      "dest": [],
+      "reason": "其他购买方式/加密/内容访问：需安装包与地区配置"
+    },
+    {
+      "key": "3.1.5",
+      "title": "Cryptocurrencies:",
+      "mode": "human",
+      "dest": [],
+      "reason": "其他购买方式/加密/内容访问：需安装包与地区配置"
+    },
+    {
+      "key": "3.2",
+      "title": "Other Business Model Issues",
+      "mode": "human",
+      "dest": [],
+      "reason": "其他业务模式：需后台与合同"
+    },
+    {
+      "key": "3.2.1",
+      "title": "Acceptable",
+      "mode": "human",
+      "dest": [],
+      "reason": "其他业务模式：需后台与合同"
+    },
+    {
+      "key": "3.2.2",
+      "title": "Unacceptable",
+      "mode": "rule",
+      "dest": [
+        "ASRG-3.2.2x-FORCE-RATE"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "4.1",
+      "title": "Copycats",
+      "mode": "human",
+      "dest": [],
+      "reason": "抄袭复制：需与在先作品比对，人工判断"
+    },
+    {
+      "key": "4.2",
+      "title": "Minimum Functionality",
+      "mode": "rule",
+      "dest": [
+        "ASRG-4.2-MINFUNC"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "4.2.1",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "ASRG-4.2-MINFUNC"
+      ],
+      "reason": "并入 4.2 的规则"
+    },
+    {
+      "key": "4.2.2",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "ASRG-4.2-MINFUNC"
+      ],
+      "reason": "并入 4.2 的规则"
+    },
+    {
+      "key": "4.2.3",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "ASRG-4.2-MINFUNC"
+      ],
+      "reason": "并入 4.2 的规则"
+    },
+    {
+      "key": "4.2.4",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "ASRG-4.2-MINFUNC"
+      ],
+      "reason": "并入 4.2 的规则"
+    },
+    {
+      "key": "4.2.5",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "ASRG-4.2-MINFUNC"
+      ],
+      "reason": "并入 4.2 的规则"
+    },
+    {
+      "key": "4.2.6",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "ASRG-4.2-MINFUNC"
+      ],
+      "reason": "并入 4.2 的规则"
+    },
+    {
+      "key": "4.2.7",
+      "title": "Remote Desktop Clients:",
+      "mode": "rule",
+      "dest": [
+        "ASRG-4.2-MINFUNC"
+      ],
+      "reason": "并入 4.2 的规则"
+    },
+    {
+      "key": "4.3",
+      "title": "Spam",
+      "mode": "rule",
+      "dest": [
+        "ASRG-4.3-FORTUNE",
+        "ASRG-4.3b-SATURATED",
+        "ASRG-4.3-MULTI-BUNDLE"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "4.4",
+      "title": "Extensions",
+      "mode": "human",
+      "dest": [],
+      "reason": "扩展与插件：需安装包"
+    },
+    {
+      "key": "4.4.1",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "扩展与插件：需安装包"
+    },
+    {
+      "key": "4.4.2",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "扩展与插件：需安装包"
+    },
+    {
+      "key": "4.4.3",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "扩展与插件：需安装包"
+    },
+    {
+      "key": "4.5",
+      "title": "Apple Sites and Services",
+      "mode": "human",
+      "dest": [],
+      "reason": "Apple 站点与服务使用：需行为记录"
+    },
+    {
+      "key": "4.5.1",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "Apple 站点与服务使用：需行为记录"
+    },
+    {
+      "key": "4.5.2",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "Apple 站点与服务使用：需行为记录"
+    },
+    {
+      "key": "4.5.3",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "Apple 站点与服务使用：需行为记录"
+    },
+    {
+      "key": "4.5.4",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "Apple 站点与服务使用：需行为记录"
+    },
+    {
+      "key": "4.5.5",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "Apple 站点与服务使用：需行为记录"
+    },
+    {
+      "key": "4.5.6",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "Apple 站点与服务使用：需行为记录"
+    },
+    {
+      "key": "4.6",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "替代分发市场：需资质材料"
+    },
+    {
+      "key": "4.7",
+      "title": "Mini apps, mini games, streaming games, chatbots, plug-ins, and game emulators",
+      "mode": "rule",
+      "dest": [
+        "ASRG-4.7-CHATBOT"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "4.7.1",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "ASRG-4.7-CHATBOT"
+      ],
+      "reason": "并入 4.7 的规则"
+    },
+    {
+      "key": "4.7.2",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "ASRG-4.7-CHATBOT"
+      ],
+      "reason": "并入 4.7 的规则"
+    },
+    {
+      "key": "4.7.3",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "ASRG-4.7-CHATBOT"
+      ],
+      "reason": "并入 4.7 的规则"
+    },
+    {
+      "key": "4.7.4",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "ASRG-4.7-CHATBOT"
+      ],
+      "reason": "并入 4.7 的规则"
+    },
+    {
+      "key": "4.7.5",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "ASRG-4.7.5-AGE"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "4.8",
+      "title": "Login Services",
+      "mode": "rule",
+      "dest": [
+        "ASRG-4.8-LOGIN"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "4.9",
+      "title": "Apple Pay",
+      "mode": "human",
+      "dest": [],
+      "reason": "Apple Pay：需支付集成与商户配置"
+    },
+    {
+      "key": "4.10",
+      "title": "Monetizing Built-In Capabilities",
+      "mode": "human",
+      "dest": [],
+      "reason": "抄袭复制：需与在先作品比对，人工判断"
+    },
+    {
+      "key": "5.1",
+      "title": "Privacy",
+      "mode": "human",
+      "dest": [],
+      "reason": "法律与隐私条款：需合同或人工判断"
+    },
+    {
+      "key": "5.1.1",
+      "title": "Data Collection and Storage",
+      "mode": "rule",
+      "dest": [
+        "ASRG-5.1.1i-PRIVACY",
+        "ASRG-5.1.1v-ACCOUNT-DELETE",
+        "ASRG-PRIVACY-LABEL"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "5.1.2",
+      "title": "Data Use and Sharing",
+      "mode": "rule",
+      "dest": [
+        "ASRG-5.1.2i-AI-SHARING",
+        "ASRG-5.1.2ii-PURPOSE"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "5.1.3",
+      "title": "Health and Health Research",
+      "mode": "rule",
+      "dest": [
+        "ASRG-5.1.3-HEALTH"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "5.1.4",
+      "title": "Kids",
+      "mode": "rule",
+      "dest": [
+        "ASRG-5.1.4-KIDS-DATA"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "5.1.5",
+      "title": "Location Services",
+      "mode": "human",
+      "dest": [],
+      "reason": "位置数据：需安装包与系统权限弹窗"
+    },
+    {
+      "key": "5.2",
+      "title": "Intellectual Property",
+      "mode": "human",
+      "dest": [],
+      "reason": "知识产权：需权利材料与人工判断"
+    },
+    {
+      "key": "5.2.1",
+      "title": "Generally:",
+      "mode": "human",
+      "dest": [],
+      "reason": "知识产权：需权利材料与人工判断"
+    },
+    {
+      "key": "5.2.2",
+      "title": "Third-Party Sites/Services:",
+      "mode": "human",
+      "dest": [],
+      "reason": "知识产权：需权利材料与人工判断"
+    },
+    {
+      "key": "5.2.3",
+      "title": "Audio/Video Downloading:",
+      "mode": "human",
+      "dest": [],
+      "reason": "知识产权：需权利材料与人工判断"
+    },
+    {
+      "key": "5.2.4",
+      "title": "Apple Endorsements:",
+      "mode": "human",
+      "dest": [],
+      "reason": "知识产权：需权利材料与人工判断"
+    },
+    {
+      "key": "5.2.5",
+      "title": "Apple Products:",
+      "mode": "human",
+      "dest": [],
+      "reason": "知识产权：需权利材料与人工判断"
+    },
+    {
+      "key": "5.3",
+      "title": "Gaming, Gambling, and Lotteries",
+      "mode": "rule",
+      "dest": [
+        "ASRG-5.3.4-GAMBLING"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "5.3.1",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "法律与隐私条款：需合同或人工判断"
+    },
+    {
+      "key": "5.3.2",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "法律与隐私条款：需合同或人工判断"
+    },
+    {
+      "key": "5.3.3",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "法律与隐私条款：需合同或人工判断"
+    },
+    {
+      "key": "5.3.4",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "法律与隐私条款：需合同或人工判断"
+    },
+    {
+      "key": "5.4",
+      "title": "VPN Apps",
+      "mode": "human",
+      "dest": [],
+      "reason": "VPN 应用：需技术与资质"
+    },
+    {
+      "key": "5.5",
+      "title": "Mobile Device Management",
+      "mode": "human",
+      "dest": [],
+      "reason": "移动设备管理：需企业资质"
+    },
+    {
+      "key": "5.6",
+      "title": "Developer Code of Conduct",
+      "mode": "human",
+      "dest": [],
+      "reason": "法律与隐私条款：需合同或人工判断"
+    },
+    {
+      "key": "5.6.1",
+      "title": "App Store Reviews",
+      "mode": "human",
+      "dest": [],
+      "reason": "开发者行为准则/发现欺诈：需行为证据"
+    },
+    {
+      "key": "5.6.2",
+      "title": "Developer Identity",
+      "mode": "rule",
+      "dest": [
+        "ASRG-5.6.2-DEV-IDENTITY"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "5.6.3",
+      "title": "Discovery Fraud",
+      "mode": "human",
+      "dest": [],
+      "reason": "开发者行为准则/发现欺诈：需行为证据"
+    },
+    {
+      "key": "5.6.4",
+      "title": "App Quality",
+      "mode": "human",
+      "dest": [],
+      "reason": "法律与隐私条款：需合同或人工判断"
+    },
+    {
+      "key": "年龄分级问卷",
+      "title": "App Store Connect 年龄分级（2026-11 新增 Dating / Shared Location 项）",
+      "mode": "rule",
+      "dest": [
+        "ASRG-2.3.6-AGE-RATING",
+        "ASRG-AGE-RATING-FORM",
+        "ASRG-AGE-DATING-COMPANION",
+        "ASRG-AGE-SHARED-LOCATION"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "EU DSA 交易者",
+      "title": "DSA 交易者身份与联系方式披露（ASC 合规信息）",
+      "mode": "rule",
+      "dest": [
+        "ASRG-DSA-TRADER"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "DPLA Schedule 2",
+      "title": "开发者协议附则 2（订阅/内购披露义务归属）",
+      "mode": "rule",
+      "dest": [
+        "ASRG-DPLA-S2-3.2"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "1.1.1",
+      "title": "（并入 1.1 内容禁止项）",
+      "mode": "rule",
+      "dest": [
+        "ASRG-1.2-PORN"
+      ],
+      "reason": "色情/儿童性化内容可直接下架"
+    }
+  ],
+  "play": [
+    {
+      "key": "Child Endangerment",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-FAM-01-FAMILIES"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Inappropriate Content",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-META-03-SUGGESTIVE",
+        "GP-AGE-01-BLOCK-MINORS"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Sexual Content and Profanity",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-META-03-SUGGESTIVE"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Hate Speech",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "内容判断：需看应用内 UGC 与审核记录"
+    },
+    {
+      "key": "Violence",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "内容判断：需应用内实际内容"
+    },
+    {
+      "key": "Violent Extremism",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "内容判断：需应用内实际内容"
+    },
+    {
+      "key": "Sensitive Events",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "内容判断：需应用内实际内容"
+    },
+    {
+      "key": "Bullying and Harassment",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "内容判断：需应用内实际内容"
+    },
+    {
+      "key": "Dangerous Products",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "商品/内容判定：需看交易与展示"
+    },
+    {
+      "key": "Marijuana",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "商品/内容判定：需看交易与展示"
+    },
+    {
+      "key": "Tobacco and Alcohol",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "商品/内容判定：需看交易与展示"
+    },
+    {
+      "key": "Age-Restricted Content and Functionality",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-AGE-01-BLOCK-MINORS"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Financial Services",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "金融资质：需牌照与地区材料"
+    },
+    {
+      "key": "Binary Options",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "金融资质：需牌照与地区材料"
+    },
+    {
+      "key": "Loans",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "金融资质：需牌照与地区材料"
+    },
+    {
+      "key": "Earned Wage Access",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "金融资质：需牌照与地区材料"
+    },
+    {
+      "key": "Country specific requirements",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "金融资质：需牌照与地区材料"
+    },
+    {
+      "key": "Real-Money Gambling, Games, and Contests",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "博彩资质：需牌照与地区配置"
+    },
+    {
+      "key": "Illegal Activities",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "违法活动：需内容与行为证据"
+    },
+    {
+      "key": "User Generated Content",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-UGC-01-MODERATION"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Health Content and Services",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-HEALTH-01-CLAIMS",
+        "GP-HEALTH-02-DISCLAIMER"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Health and Medical Apps",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-HEALTH-01-CLAIMS",
+        "GP-HEALTH-02-DISCLAIMER"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Health Connect Data",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "健康细分：需功能与资质材料"
+    },
+    {
+      "key": "Prescription Drugs",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "健康细分：需功能与资质材料"
+    },
+    {
+      "key": "Unapproved Substances",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "健康细分：需功能与资质材料"
+    },
+    {
+      "key": "Health Misinformation",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "健康细分：需功能与资质材料"
+    },
+    {
+      "key": "Payments - Clinical Services",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-PAY-01-BILLING"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Blockchain-based Content",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "加密资产：需地区配置与牌照"
+    },
+    {
+      "key": "AI-Generated Content",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-AI-01-REPORT",
+        "GP-AI-02-RESTRICTED"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Intellectual Property",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "IP 侵权：需权利材料与人工比对"
+    },
+    {
+      "key": "Privacy, Deception and Device Abuse",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "技术实现：需安装包"
+    },
+    {
+      "key": "User Data",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-UD-01-PRIVACY",
+        "GP-UD-05-ACCOUNT-DELETE"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Personal and Sensitive User Data",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-UD-03-PROMINENT",
+        "GP-UD-06-PERSISTENT-ID"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Prominent Disclosure & Consent Requirement",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-UD-03-PROMINENT",
+        "GP-UD-06-PERSISTENT-ID"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Restrictions for Personal and Sensitive Data Access",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-UD-03-PROMINENT",
+        "GP-UD-06-PERSISTENT-ID"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Data safety section",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-UD-02-DATA-SAFETY"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Privacy Policy",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-UD-01-PRIVACY"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Account Deletion Requirement",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-DEV-01-VERIFY"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Usage of App Set ID",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "API / 权限 / 合规框架的声明型要求：需 Play Console 申报或安装包"
+    },
+    {
+      "key": "EU-U.S., UK, and Swiss Data Privacy Frameworks",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "API / 权限 / 合规框架的声明型要求：需 Play Console 申报或安装包"
+    },
+    {
+      "key": "Permissions and APIs that Access Sensitive Information",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "技术实现：需安装包"
+    },
+    {
+      "key": "Restricted Permissions",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-SENS-01-LOCATION"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Restricted Permissions with minimum scope alternatives",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-SENS-01-LOCATION"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "SMS and Call Log Permissions",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "技术实现：需安装包"
+    },
+    {
+      "key": "Location Permissions",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-SENS-01-LOCATION"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Package (App) Visibility Permission",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-PKG-01-REGISTER"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Accessibility API",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "API / 权限 / 合规框架的声明型要求：需 Play Console 申报或安装包"
+    },
+    {
+      "key": "Request Install Packages Permission",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-PKG-01-REGISTER"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Body Sensor Permissions",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "技术实现：需安装包"
+    },
+    {
+      "key": "Health Connect by Android Permissions",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "健康细分：需功能与资质材料"
+    },
+    {
+      "key": "VPN Service",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "API / 权限 / 合规框架的声明型要求：需 Play Console 申报或安装包"
+    },
+    {
+      "key": "Exact Alarm Permission",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "API / 权限 / 合规框架的声明型要求：需 Play Console 申报或安装包"
+    },
+    {
+      "key": "Full-Screen Intent Permission",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "API / 权限 / 合规框架的声明型要求：需 Play Console 申报或安装包"
+    },
+    {
+      "key": "Age Signals API and User Data",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "API / 权限 / 合规框架的声明型要求：需 Play Console 申报或安装包"
+    },
+    {
+      "key": "Device and Network Abuse",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "恶意软件/滥用分类：需安装包分析（人工或沙箱）"
+    },
+    {
+      "key": "Permissions for Foreground Services (FGS)",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "技术实现：需安装包"
+    },
+    {
+      "key": "User-Initiated Data Transfer Jobs",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "API / 权限 / 合规框架的声明型要求：需 Play Console 申报或安装包"
+    },
+    {
+      "key": "Flag Secure Requirements",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "API / 权限 / 合规框架的声明型要求：需 Play Console 申报或安装包"
+    },
+    {
+      "key": "Apps that Run On-device Android Containers",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "API / 权限 / 合规框架的声明型要求：需 Play Console 申报或安装包"
+    },
+    {
+      "key": "Deceptive Behavior",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-DEC-01-METADATA",
+        "GP-DEC-02-REVIEW"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "1. Misleading Claims",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-DEC-01-METADATA"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "2. Deceptive Device Settings Changes",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-DEC-01-METADATA"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "3. Enabling Dishonest Behavior",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-DEC-01-METADATA"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "4. Manipulated Media",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-DEC-01-METADATA"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "5. Behavior Transparency",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-DEC-01-METADATA"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Misrepresentation",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-MIS-01-IMPERSONATION"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Google Play's Target API Level Policy",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "API / 权限 / 合规框架的声明型要求：需 Play Console 申报或安装包"
+    },
+    {
+      "key": "Use of SDKs In Apps",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-UD-04-THIRD-PARTY-AI"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "SDK Requirements",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-UD-04-THIRD-PARTY-AI"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Malware",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "技术实现：需安装包"
+    },
+    {
+      "key": "Backdoors",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "恶意软件/滥用分类：需安装包分析（人工或沙箱）"
+    },
+    {
+      "key": "Billing Fraud",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "恶意软件/滥用分类：需安装包分析（人工或沙箱）"
+    },
+    {
+      "key": "Stalkerware",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "恶意软件/滥用分类：需安装包分析（人工或沙箱）"
+    },
+    {
+      "key": "Denial of Service (DoS)",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "恶意软件/滥用分类：需安装包分析（人工或沙箱）"
+    },
+    {
+      "key": "Hostile Downloaders",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "恶意软件/滥用分类：需安装包分析（人工或沙箱）"
+    },
+    {
+      "key": "Non-Android Threat",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "恶意软件/滥用分类：需安装包分析（人工或沙箱）"
+    },
+    {
+      "key": "Phishing",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "恶意软件/滥用分类：需安装包分析（人工或沙箱）"
+    },
+    {
+      "key": "Elevated Privilege Abuse",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "恶意软件/滥用分类：需安装包分析（人工或沙箱）"
+    },
+    {
+      "key": "Ransomware",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "恶意软件/滥用分类：需安装包分析（人工或沙箱）"
+    },
+    {
+      "key": "Rooting",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "恶意软件/滥用分类：需安装包分析（人工或沙箱）"
+    },
+    {
+      "key": "Spam",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-SPAM-01-REPETITIVE",
+        "GP-SPAM-02-WEBVIEW"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Spyware",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "恶意软件/滥用分类：需安装包分析（人工或沙箱）"
+    },
+    {
+      "key": "Trojan",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "恶意软件/滥用分类：需安装包分析（人工或沙箱）"
+    },
+    {
+      "key": "Riskware",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "恶意软件/滥用分类：需安装包分析（人工或沙箱）"
+    },
+    {
+      "key": "Impersonation",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-MIS-01-IMPERSONATION"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Mobile Unwanted Software",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "恶意软件/滥用分类：需安装包分析（人工或沙箱）"
+    },
+    {
+      "key": "Ad Fraud",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-ADS-01-DECEPTIVE"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Unauthorized Use or Imitation of System Functionality",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-FUNC-01-BROKEN"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Social Engineering",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-DEC-01-METADATA"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Monetization and Ads",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-ADS-01-DECEPTIVE",
+        "GP-ADS-02-INTERSTITIAL"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Payments",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-PAY-01-BILLING"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Ads",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-ADS-01-DECEPTIVE",
+        "GP-ADS-02-INTERSTITIAL"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Subscriptions",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-SUB-01-DISCLOSURE",
+        "GP-SUB-02-VALUE",
+        "GP-SUB-03-TRIAL",
+        "GP-SUB-04-LOCALIZED",
+        "GP-SUB-05-ELIGIBILITY"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Families Self-Certified Ads SDK Program",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-FAM-01-FAMILIES",
+        "GP-FAM-02-AGE-SCREEN"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Store Listing and Promotion",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-META-01-TITLE",
+        "GP-META-02-DESCRIPTION"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "App Promotion",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-ADS-01-DECEPTIVE"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Metadata",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-META-01-TITLE",
+        "GP-META-02-DESCRIPTION"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "User Ratings, Reviews, and Installs",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-RATE-01-IARC"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Content Ratings",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-RATE-01-IARC"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Spam, Functionality, and User Experience",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-SPAM-01-REPETITIVE",
+        "GP-SPAM-02-WEBVIEW"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Functionality, Content, and User Experience",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-FUNC-01-BROKEN"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "1. Limited Functionality and Content",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-FUNC-01-BROKEN"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "2. Broken Functionality",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-FUNC-01-BROKEN"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Android Instant Apps",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "细分投放形态政策：当前品类不涉及"
+    },
+    {
+      "key": "Android Emoji Policy",
+      "title": "",
+      "mode": "human",
+      "dest": [],
+      "reason": "细分投放形态政策：当前品类不涉及"
+    },
+    {
+      "key": "Families",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-FAM-01-FAMILIES",
+        "GP-FAM-02-AGE-SCREEN"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Google Play Families Policies",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-FAM-01-FAMILIES",
+        "GP-FAM-02-AGE-SCREEN"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Families Policy Requirements",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-FAM-01-FAMILIES",
+        "GP-FAM-02-AGE-SCREEN"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Ads and Monetization",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-ADS-01-DECEPTIVE",
+        "GP-ADS-02-INTERSTITIAL"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Families Self-Certified Ads SDK Policy",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-FAM-01-FAMILIES",
+        "GP-FAM-02-AGE-SCREEN"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Enforcement",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-ENF-01-RELATED"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Enforcement Process",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-ENF-01-RELATED"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Account Transfers",
+      "title": "",
+      "mode": "rule",
+      "dest": [
+        "GP-DEV-01-VERIFY"
+      ],
+      "reason": ""
+    },
+    {
+      "key": "Trader status",
+      "title": "EEA/UK 交易者声明（帮助中心独立政策）",
+      "mode": "rule",
+      "dest": [
+        "GP-TRADER-01-DSA"
+      ],
+      "reason": ""
+    }
+  ],
+  "summary": {
+    "apple_entries": 130,
+    "apple_rule": 44,
+    "apple_vision": 2,
+    "apple_human": 84,
+    "play_entries": 114,
+    "play_rule": 58,
+    "play_human": 56,
+    "unclassified": [],
+    "rules_without_entry": []
+  }
+}

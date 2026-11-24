@@ -1,0 +1,17 @@
+{"ts": "2026-11-23T23:55:23-06:00", "tool": "fetch", "query_or_url": "https://developer.apple.com/app-store/review/guidelines/", "status": "ok", "used_for": "Apple 审核指南全文"}
+{"ts": "2026-11-23T23:56:31-06:00", "tool": "fetch", "query_or_url": "https://developer.apple.com/app-store/review/guidelines/", "status": "ok", "used_for": "Apple 审核指南全文（五节+更新记录）"}
+{"ts": "2026-11-23T23:57:01-06:00", "tool": "fetch", "query_or_url": "https://developer.apple.com/app-store/review/guidelines/", "status": "ok", "used_for": "Apple 审核指南全文（五节+更新记录）"}
+{"ts": "2026-11-23T23:57:46-06:00", "tool": "fetch", "query_or_url": "https://developer.apple.com/news/?id=92th7e5i", "status": "ok", "used_for": "Apple 审核指南 2026-10-16 更新公告（近12个月更新记录）"}
+{"ts": "2026-11-23T23:57:59-06:00", "tool": "fetch", "query_or_url": "https://developer.apple.com/help/app-store-connect/manage-app-information/set-an-app-age-rating/", "status": "ok", "used_for": "Apple 年龄分级问卷与新分级体系（2025 起 13+/16+/18+）"}
+{"ts": "2026-11-23T23:58:03-06:00", "tool": "fetch", "query_or_url": "https://developer.apple.com/help/app-store-connect/manage-compliance-information/manage-european-union-digital-services-act-trader-requirements/", "status": "ok", "used_for": "EU DSA 交易者身份与联系方式披露"}
+{"ts": "2026-11-23T23:58:05-06:00", "tool": "fetch", "query_or_url": "https://developer.apple.com/app-store/app-privacy-details/", "status": "ok", "used_for": "App 隐私标签（App Privacy Details）填写要求"}
+{"ts": "2026-11-23T23:58:08-06:00", "tool": "fetch", "query_or_url": "https://developer.apple.com/app-store/subscriptions/", "status": "ok", "used_for": "自动续期订阅披露与订阅设计"}
+{"ts": "2026-11-23T23:58:09-06:00", "tool": "curl", "query_or_url": "https://developer.apple.com/app-store/review/", "status": "blocked", "used_for": "App Review 总览（拒绝常见原因）"}
+{"ts": "2026-11-24T00:02:34-06:00", "tool": "fetch", "query_or_url": "https://developer.apple.com/help/app-store-connect/reference/app-information/age-ratings-values-and-definitions", "status": "ok", "used_for": "Apple 年龄分级取值与定义（4+/9+/13+/16+/18+）"}
+{"ts": "2026-11-24T00:02:39-06:00", "tool": "search", "query_or_url": "site:developer.apple.com/news App Review Guidelines update 2026 age rating", "status": "ok", "used_for": "Apple 近12个月指南更新与年龄分级公告"}
+{"ts": "2026-11-24T00:02:53-06:00", "tool": "fetch", "query_or_url": "https://developer.apple.com/news/?id=ey6d8onl", "status": "ok", "used_for": "Apple 指南更新（创作者内容年龄限制 1.2.1(a) 等）"}
+{"ts": "2026-11-24T00:02:55-06:00", "tool": "fetch", "query_or_url": "https://developer.apple.com/news/?id=d75yllv4", "status": "ok", "used_for": "Apple 指南更新：随机/匿名聊天纳入 1.2 UGC"}
+{"ts": "2026-11-24T00:02:58-06:00", "tool": "fetch", "query_or_url": "https://developer.apple.com/news/?id=vvzx6cul", "status": "ok", "used_for": "Apple 指南更新：非自愿性内容与生成裸露"}
+{"ts": "2026-11-24T00:03:01-06:00", "tool": "fetch", "query_or_url": "https://developer.apple.com/news/upcoming-requirements/", "status": "ok", "used_for": "Apple 即将生效的要求（年龄分级问卷、DSA 等）"}
+{"ts": "2026-11-24T00:03:54-06:00", "tool": "fetch", "query_or_url": "https://developer.apple.com/support/terms/apple-developer-program-license-agreement/", "status": "ok", "used_for": "Apple DPLA（Schedule 2 订阅条款）"}
+{"ts": "2026-11-24T00:28:45-06:00", "tool": "fetch", "query_or_url": "https://developer.apple.com/news/", "status": "ok", "used_for": "Apple Developer News 首页快照：2026-11-02 年龄分级新增 Shared Location / Dating and Relationships 描述项公告、2026-10-16 指南更新"}

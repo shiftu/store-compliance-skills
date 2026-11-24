@@ -1,0 +1,201 @@
+{
+  "store": "google_play",
+  "generated_on": "2026-11-24",
+  "source": "sources/play/policy_deadlines.md",
+  "count": 15,
+  "deadlines": [
+    {
+      "deadline": "2027-01-27",
+      "area": "Permissions and APIs that Access Sensitive Information",
+      "summary": "We're introducing the Contacts Permissions policy to govern broad access of users' contacts. Apps that don't need broad access must use the Android Contact Picker, a more secure, easy-to-integrate alternative that minimizes data collection and improves user safety. Announced 2026-04-15",
+      "rules": [],
+      "source_url": "https://support.google.com/googleplay/android-developer/table/12921780",
+      "retrieved_on": "2026-11-24",
+      "status": "upcoming",
+      "days_left": 64,
+      "unmapped": true,
+      "mapping_note": "无对应规则：规则库未收录 Contact permissions 政策（不做硬挂）"
+    },
+    {
+      "deadline": "2027-01-27",
+      "area": "Permissions and APIs that Access Sensitive Information",
+      "summary": "To better protect user privacy, we're updating our Location Permissions policy. We're introducing the location button as the recommended minimum scope for precise location in line with our user data and sensitive permissions requirements. Announced 2026-04-15",
+      "rules": [
+        "GP-SENS-01-LOCATION"
+      ],
+      "source_url": "https://support.google.com/googleplay/android-developer/table/12921780",
+      "retrieved_on": "2026-11-24",
+      "status": "upcoming",
+      "days_left": 64,
+      "unmapped": false
+    },
+    {
+      "deadline": "2027-01-27",
+      "area": "Use of SMS or call log permission groups",
+      "summary": "Our SMS and Call Log Permissions policy will no longer permit account verification via phone call as a use case for the `READ_CALL_LOG` permission. To securely verify accounts without requiring sensitive app permissions, use the Digital Credentials API instead, either directly or through a verification provider built upon it, or the SMS Retriever API. Please refer to this page for additional alternative APIs. Announced 2026-07-15",
+      "rules": [],
+      "source_url": "https://support.google.com/googleplay/android-developer/table/12921780",
+      "retrieved_on": "2026-11-24",
+      "status": "upcoming",
+      "days_left": 64,
+      "unmapped": true,
+      "mapping_note": "无对应规则：SMS / Call Log 权限政策与规则库条目无关，原挂 GP-SENS-01-LOCATION 属错挂"
+    },
+    {
+      "deadline": "2027-01-27",
+      "area": "Understanding foreground service and full-screen intent requirements",
+      "summary": "We're removing geofencing as an approved foreground services use case. Developers can instead use the Geofence API for this use case. Announced 2026-04-15",
+      "rules": [],
+      "source_url": "https://support.google.com/googleplay/android-developer/table/12921780",
+      "retrieved_on": "2026-11-24",
+      "status": "upcoming",
+      "days_left": 64,
+      "unmapped": true,
+      "mapping_note": "无对应规则：前台服务 / 全屏 Intent 与 geofencing 用例，原挂 GP-ADS-02-INTERSTITIAL 属错挂"
+    },
+    {
+      "deadline": "2027-01-27",
+      "area": "Subscriptions",
+      "summary": "Subscriptions with ongoing eligibility-based discounts: Subscriptions with ongoing eligibility-based discounts, such as student plans, must clearly disclose eligibility criteria, the verification process, and post-eligibility pricing and benefit changes. Announced 2026-10-29",
+      "rules": [
+        "GP-SUB-05-ELIGIBILITY"
+      ],
+      "source_url": "https://support.google.com/googleplay/android-developer/table/12921780",
+      "retrieved_on": "2026-11-24",
+      "status": "upcoming",
+      "days_left": 64,
+      "unmapped": false
+    },
+    {
+      "deadline": "2027-02-01",
+      "area": "Trader status declaration",
+      "summary": "全体开发者须在 Play Console 完成 EEA/UK 交易者或非交易者声明；未申报将导致资料与全部应用全球移除。",
+      "rules": [
+        "GP-TRADER-01-DSA"
+      ],
+      "source_url": "https://support.google.com/googleplay/android-developer/answer/17594752",
+      "retrieved_on": "2026-11-24",
+      "status": "upcoming",
+      "days_left": 69,
+      "unmapped": false
+    },
+    {
+      "deadline": "2027-04-14",
+      "area": "Permissions and APIs that Access Sensitive Information",
+      "summary": "AppFunctions API: Developers building AppFunctions must comply with all existing Google Play policies. AppFunctions are strictly prohibited from deceiving or manipulating AI agents, bypassing security controls, or interfering with other applications. Announced 2026-10-29",
+      "rules": [],
+      "source_url": "https://support.google.com/googleplay/android-developer/table/12921780",
+      "retrieved_on": "2026-11-24",
+      "status": "upcoming",
+      "days_left": 141,
+      "why": "无对应规则（技术/申报型要求，外部不可见）",
+      "unmapped": true,
+      "mapping_note": "无对应规则：AppFunctions API 条款，规则库未收录"
+    },
+    {
+      "deadline": "2027-08-25",
+      "area": "Permissions and APIs that Access Sensitive Information",
+      "summary": "Local Network Permission: This permission is restricted to apps that need it for core functionality when device pickers are insufficient. Apps targeting Android 17 or higher (API 37+) must submit a Play Console declaration to use this permission. Announced 2026-10-29",
+      "rules": [],
+      "source_url": "https://support.google.com/googleplay/android-developer/table/12921780",
+      "retrieved_on": "2026-11-24",
+      "status": "upcoming",
+      "days_left": 274,
+      "unmapped": true,
+      "mapping_note": "无对应规则：Local Network 权限，规则库未收录（不等于位置权限）"
+    },
+    {
+      "deadline": "2027-08-25",
+      "area": "Permissions and APIs that Access Sensitive Information",
+      "summary": "Manage Contacts Permission: This permission is restricted to apps that need it for core functionality when system pickers are insufficient and apps must submit a Play Console declaration to use it. All other apps must use narrowly scoped platform intents. Announced 2026-10-29",
+      "rules": [],
+      "source_url": "https://support.google.com/googleplay/android-developer/table/12921780",
+      "retrieved_on": "2026-11-24",
+      "status": "upcoming",
+      "days_left": 274,
+      "unmapped": true,
+      "mapping_note": "无对应规则：Manage Contacts 权限，规则库未收录"
+    },
+    {
+      "deadline": "2026-08-26",
+      "area": "Google Play Families Policies",
+      "summary": "We're expanding our Families Policy Requirements policy to prohibit developers of anonymous chat apps from targeting children. Announced 2026-07-15",
+      "rules": [
+        "GP-FAM-01-FAMILIES",
+        "GP-FAM-02-AGE-SCREEN"
+      ],
+      "source_url": "https://support.google.com/googleplay/android-developer/table/12921780",
+      "retrieved_on": "2026-11-24",
+      "status": "passed",
+      "days_left": -90,
+      "unmapped": false
+    },
+    {
+      "deadline": "2026-08-26",
+      "area": "Child Endangerment",
+      "summary": "We're expanding our Child Safety Standards policy to apply to anonymous chat and random chat apps. Announced 2026-07-15",
+      "rules": [
+        "GP-AGE-01-BLOCK-MINORS"
+      ],
+      "source_url": "https://support.google.com/googleplay/android-developer/table/12921780",
+      "retrieved_on": "2026-11-24",
+      "status": "passed",
+      "days_left": -90,
+      "unmapped": false
+    },
+    {
+      "deadline": "2026-08-26",
+      "area": "Age-Restricted Content and Functionality",
+      "summary": "We're expanding our Age-Restricted Content and Functionality policy to apply to anonymous chat and random chat apps. Announced 2026-07-15",
+      "rules": [
+        "GP-AGE-01-BLOCK-MINORS",
+        "GP-RATE-01-IARC"
+      ],
+      "source_url": "https://support.google.com/googleplay/android-developer/table/12921780",
+      "retrieved_on": "2026-11-24",
+      "status": "passed",
+      "days_left": -90,
+      "unmapped": false
+    },
+    {
+      "deadline": "2026-08-31",
+      "area": "Target API level",
+      "summary": "所有应用须达到当年 target API level 要求（2026 年为 8 月 31 日）。",
+      "rules": [],
+      "why": "由安装包 targetSdkVersion 决定，商店页不可见",
+      "source_url": "https://support.google.com/googleplay/android-developer/answer/17134731",
+      "retrieved_on": "2026-11-24",
+      "status": "passed",
+      "days_left": -85,
+      "unmapped": true,
+      "mapping_note": "无对应规则：target API level 属技术门槛，规则库未收录为合规条目"
+    },
+    {
+      "deadline": "2026-09-30",
+      "area": "Play Console Requirements",
+      "summary": "To meet Android developer verification requirements and Play Console requirements, you must register your Play apps in Play Console. While 99% of apps on Play have been registered automatically, you should check your Play Console Home page and register any remaining apps you want to continue distributing to avoid global removal from Google Play and ensure a seamless user installation experience. You can also use Play Console to register apps you distribute outside of Google Play to ensure they can be installed on certified Android devices. Announced 2026-07-15",
+      "rules": [
+        "GP-DEV-01-VERIFY",
+        "GP-PKG-01-REGISTER"
+      ],
+      "source_url": "https://support.google.com/googleplay/android-developer/table/12921780",
+      "retrieved_on": "2026-11-24",
+      "status": "passed",
+      "days_left": -55,
+      "unmapped": false
+    },
+    {
+      "deadline": "2026-10-29",
+      "area": "Developer Program Policy（全量生效版）",
+      "summary": "当前政策全文的生效日；此前公告的变更以此为基线。",
+      "rules": [],
+      "why": "基线日期，不是单条义务",
+      "source_url": "https://support.google.com/googleplay/android-developer/answer/18265346",
+      "retrieved_on": "2026-11-24",
+      "status": "passed",
+      "days_left": -26,
+      "unmapped": true,
+      "mapping_note": "无对应规则：全量政策生效基线，不单独对应条目"
+    }
+  ]
+}
