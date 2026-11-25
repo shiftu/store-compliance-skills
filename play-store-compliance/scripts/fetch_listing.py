@@ -980,25 +980,71 @@ def check_play_privacy(app_dir, listing):
         return V("不符合", "中", [ev(f, find=anchor)], "隐私政策以 PDF 提供，不满足可访问性要求。")
     if "docs.google.com/document" in url and "/edit" in url:
         return V("不符合", "中", [ev(f, find=anchor)],
-                 "隐私政策链接是 Google Docs 的编辑链接（%s）：Play 要求政策放在可公开访问、不可被随意编辑的 URL 上，"
-                 "编辑链接不满足；应换成自有域名页面或「发布到网络」的只读链接。" % url)
+                 "隐私政策链接是 Google Docs 的编辑链接（%s）。Play 要求政策页不可被编辑；这份文档对访客是否只读外部无法确认，"
+                 "按整改建议处理：换成自有域名页面或「发布到网络」的只读链接。" % url,
+                 severity_override="advisory")
     return V("符合", "高", [ev(f, find=anchor)],
              "商店页有应用自有隐私政策链接 %s，HTTP=200（应用内是否另有入口需实机）。" % url)
 
 
+NEG = re.compile(r"\b(?:not|never|no|don[’']t|doesn[’']t|won[’']t|without)\b", re.I)
+COLLECT_RX = re.compile(
+    r"[^\n.;]*\b(?:collect\w*|log data|device information|usage data)\b[^\n.;]*"
+    r"\b(?:IP address|device|IMEI|MAC address|location|identifier|advertising ID|email|messages?)\b[^\n.;]*", re.I)
+SHARE_RX = re.compile(
+    r"[^\n.;]*\b(?:share|shared|sharing|disclose)\b[^\n.;]*"
+    r"\b(?:third part\w+|advertis\w+|partners?|service providers?|analytics)\b[^\n.;]*", re.I)
+
+
+def _policy_statement(rx, text):
+    """政策里第一句肯定式的收集/共享表述（逐字，可直接当 find）。否定句（we do not share…）跳过。"""
+    for m in rx.finditer(text):
+        sent = m.group(0).strip()
+        if len(sent) >= 25 and not NEG.search(sent):
+            return sent[:300]
+    return None
+
+
 def check_data_safety(app_dir, listing):
+    """Data safety 表单：有没有 + 申报与开发者自己的隐私政策是否直接矛盾。"""
     ds = (listing["fields"].get("data_safety") or {}).get("value")
     src = (listing["fields"].get("data_safety") or {}).get("source")
-    if not ds or not src:
-        return V("无法从外部判断", "中", [ev("_raw/%s_play_us.txt" % listing["slug"], absent="Data safety",
+    if not src:
+        return V("无法从外部判断", "中", [ev("_raw/%s_play_us.txt" % listing["slug"], absent="Data safety details",
                                           note="未取到 Data safety 页")],
                  "Data safety 页未取到，需后台核对。")
-    if not (ds.get("shared") or ds.get("collected")):
+    text = open(os.path.join(app_dir, src), encoding="utf-8").read()
+    no_collect = re.search(r"(No data collected|doesn[’']t collect user data)", text)
+    no_share = re.search(r"(No data shared with third parties)", text)
+    shares = re.search(r"(Data that may be shared with other companies or organizations)", text)
+    priv = (listing.get("links") or {}).get("privacy") or {}
+    pol_file = priv.get("file") if not priv.get("thin") else None
+    pol = open(os.path.join(app_dir, pol_file), encoding="utf-8").read() if pol_file else ""
+
+    if no_collect and shares:
+        return V("不符合", "高", [ev(src, find=shares.group(1)), ev(src, find=no_collect.group(1))],
+                 "Data safety 表单自相矛盾：同一页既申报向其他公司共享数据，又申报「不收集任何数据」。"
+                 "表单需在 Play Console 重填（不用发版）。")
+    if pol:
+        col = _policy_statement(COLLECT_RX, pol) if no_collect else None
+        shr = _policy_statement(SHARE_RX, pol) if no_share else None
+        if col or shr:
+            evs, parts = [], []
+            if col:
+                evs += [ev(src, find=no_collect.group(1)), ev(pol_file, find=col)]
+                parts.append("申报「不收集数据」，隐私政策却写明收集")
+            if shr:
+                evs += [ev(src, find=no_share.group(1)), ev(pol_file, find=shr)]
+                parts.append("申报「不与第三方共享」，隐私政策却写明共享")
+            return V("不符合", "中", evs,
+                     "Data safety 申报与开发者自己的隐私政策直接矛盾：%s。哪一边写错外部无法断定，"
+                     "但两者必须一致；表单在 Play Console 重填即可（不用发版）。" % "；".join(parts))
+    if not ds or not (ds.get("shared") or ds.get("collected") or no_collect or no_share):
         return V("无法从外部判断", "中", [ev(src, find="Data safety")],
                  "Data safety 页存在但没有可解析的数据类别，需后台核对表单。")
     return V("符合", "中", [ev(src, find="Data safety")],
-             "Data safety 页已声明 shared=%s / collected=%s；表单是否完整准确需 Play Console 核对。"
-             % (ds.get("shared"), ds.get("collected")))
+             "Data safety 页已申报（shared=%s / collected=%s），未发现与隐私政策的直接矛盾%s；逐类是否准确需 Play Console 核对。"
+             % (ds.get("shared"), ds.get("collected"), "" if pol else "（隐私政策正文未取到，未比对）"))
 
 
 def check_play_rating(app_dir, listing):
