@@ -48,7 +48,59 @@ def catalog_for(skill_dir, store):
     return cand[0] if len(cand) == 1 else None
 
 
-def expected_risk(violating_sevs, unknown_ratio):
+SEV_RANK = {"removal": 0, "rejection": 1, "advisory": 2}
+
+
+def effective_severity(rule, verdict):
+    """结论可以把等级往轻里调（severity_override），不能往重里调。"""
+    base = rule.get("severity")
+    ov = (verdict or {}).get("severity_override")
+    if ov in SEV_RANK and base in SEV_RANK and SEV_RANK[ov] > SEV_RANK[base]:
+        return ov
+    return base
+
+
+def evidence_errors(app_dir, v, sources, cache=None):
+    """单条结论的证据问题清单（空 = 证据站得住）。闸门与自动降级共用这一份逻辑。"""
+    cache = {} if cache is None else cache
+    errs, finds = [], 0
+    for e in v.get("evidence") or []:
+        rel = e.get("file")
+        if not rel:
+            errs.append("证据缺 file")
+            continue
+        if sources and rel not in sources:
+            errs.append("证据文件不在 sources[] 里：%s" % rel)
+        if rel not in cache:
+            p = os.path.join(app_dir, rel)
+            cache[rel] = open(p, encoding="utf-8", errors="replace").read() if os.path.exists(p) else None
+        body = cache[rel]
+        if body is None:
+            errs.append("证据文件不存在：%s" % rel)
+            continue
+        if "find" in e:
+            finds += 1
+            if not e["find"]:
+                errs.append("find 为空串")
+            elif e["find"] not in body:
+                errs.append("find 不是逐字子串（%s）：%r" % (rel, e["find"][:80]))
+        elif "absent" in e:
+            if e["absent"] and e["absent"] in body:
+                errs.append("absent 实际存在（%s）：%r" % (rel, e["absent"]))
+            if not (e.get("note") or "").strip():
+                errs.append("absent 证据缺 note（为什么要确认缺失）")
+        else:
+            errs.append("证据必须带 find 或 absent")
+    if not (v.get("evidence") or []) and not v.get("demoted_from"):
+        errs.append("没有证据")
+    if v.get("verdict") == "不符合" and finds == 0 and not v.get("absence_only_violation"):
+        errs.append("不符合 必须至少有一条 find 正面证据")
+    return errs
+
+
+def expected_risk(violating_sevs, unknown_ratio, status=None):
+    if status == "delisted":
+        return "⚫ 已下架"
     if "removal" in violating_sevs:
         return "🔴 高风险"
     if violating_sevs & {"rejection", "advisory"}:
@@ -115,37 +167,8 @@ def check_app(skill_dir, out_dir, slug, check_report=True):
             errs.append("%s/%s: 非法 confidence %r" % (slug, rid, v.get("confidence")))
         if not (v.get("note") or "").strip():
             errs.append("%s/%s: note 为空" % (slug, rid))
-        finds = absents = 0
-        for e in v.get("evidence") or []:
-            rel = e.get("file")
-            if not rel:
-                errs.append("%s/%s: 证据缺 file" % (slug, rid))
-                continue
-            if sources and rel not in sources:
-                errs.append("%s/%s: 证据文件不在 sources[] 里：%s" % (slug, rid, rel))
-            body = text_of(rel)
-            if body is None:
-                errs.append("%s/%s: 证据文件不存在：%s" % (slug, rid, rel))
-                continue
-            if "find" in e:
-                finds += 1
-                if not e["find"]:
-                    errs.append("%s/%s: find 为空串" % (slug, rid))
-                elif e["find"] not in body:
-                    errs.append("%s/%s: find 不是逐字子串（%s）：%r"
-                                % (slug, rid, rel, e["find"][:80]))
-            elif "absent" in e:
-                absents += 1
-                if e["absent"] and e["absent"] in body:
-                    errs.append("%s/%s: absent 实际存在（%s）：%r" % (slug, rid, rel, e["absent"]))
-                if not (e.get("note") or "").strip():
-                    errs.append("%s/%s: absent 证据缺 note（为什么要确认缺失）" % (slug, rid))
-            else:
-                errs.append("%s/%s: 证据必须带 find 或 absent" % (slug, rid))
-        if not (v.get("evidence") or []):
-            errs.append("%s/%s: 没有证据" % (slug, rid))
-        if verdict == "不符合" and finds == 0 and not v.get("absence_only_violation"):
-            errs.append("%s/%s: 不符合 必须至少有一条 find 正面证据" % (slug, rid))
+        for msg in evidence_errors(app_dir, v, sources, cache):
+            errs.append("%s/%s: %s" % (slug, rid, msg))
         if v.get("absence_only_violation") and verdict != "不符合":
             errs.append("%s/%s: absence_only_violation 只对 不符合 有效" % (slug, rid))
         if verdict == "不适用" and not (v.get("evidence") or []):
@@ -173,7 +196,7 @@ def check_app(skill_dir, out_dir, slug, check_report=True):
             continue
         counts[v["verdict"]] = counts.get(v["verdict"], 0) + 1
         if v["verdict"] == "不符合":
-            violating_sevs.add(rules[rid].get("severity"))
+            violating_sevs.add(effective_severity(rules[rid], v))
     total = sum(counts.values())
     unknown_ratio = (counts["无法从外部判断"] / total) if total else 0.0
     s = trial.get("summary") or {}
@@ -184,14 +207,14 @@ def check_app(skill_dir, out_dir, slug, check_report=True):
         errs.append("%s: summary[total]=%r，重算为 %d" % (slug, s.get("total"), total))
     if sorted(s.get("upcoming_excluded") or []) != sorted(upcoming):
         errs.append("%s: summary[upcoming_excluded] 与实际 upcoming 不一致" % slug)
-    risk = expected_risk(violating_sevs, unknown_ratio)
+    risk = expected_risk(violating_sevs, unknown_ratio, listing.get("status"))
     if s.get("risk") != risk:
         errs.append("%s: summary[risk]=%r，按 severity 重算应为 %r" % (slug, s.get("risk"), risk))
     vbs = s.get("violations_by_severity") or {}
     for sev in SEV:
         want = sorted(rid for rid, v in got.items()
                       if v["verdict"] == "不符合" and rid not in upcoming
-                      and rules[rid].get("severity") == sev)
+                      and effective_severity(rules[rid], v) == sev)
         have = sorted(vbs.get(sev) or [])
         if want != have:
             errs.append("%s: summary[violations_by_severity][%s]=%r，重算为 %r"

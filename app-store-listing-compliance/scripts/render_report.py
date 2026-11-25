@@ -15,6 +15,9 @@ import json
 import os
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from check_run import effective_severity  # noqa: E402
+
 SEV_ORDER = {"removal": 0, "rejection": 1, "advisory": 2}
 SEV_LABEL = {"removal": "下架级", "rejection": "拒审级", "advisory": "整改建议"}
 STORE_LABEL = {"apple_app_store": "App Store", "google_play": "Google Play"}
@@ -113,7 +116,7 @@ def render(skill_dir, out_dir, slug):
     A("## 2. 阻断项（下架级）")
     A("")
     block = sorted([v for v in vs if v["verdict"] == "不符合"
-                    and rules[v["rule_id"]].get("severity") == "removal"],
+                    and effective_severity(rules[v["rule_id"]], v) == "removal"],
                    key=lambda v: v["rule_id"])
     if not block:
         A("本店未发现下架级阻断项（判定范围见文末「方法与边界」）。")
@@ -140,8 +143,8 @@ def render(skill_dir, out_dir, slug):
     A("## 3. 疑似违规（拒审级 / 整改建议）")
     A("")
     sus = sorted([v for v in vs if v["verdict"] == "不符合"
-                  and rules[v["rule_id"]].get("severity") in ("rejection", "advisory")],
-                 key=lambda v: (SEV_ORDER[rules[v["rule_id"]].get("severity", 3)], v["rule_id"]))
+                  and effective_severity(rules[v["rule_id"]], v) in ("rejection", "advisory")],
+                 key=lambda v: (SEV_ORDER.get(effective_severity(rules[v["rule_id"]], v), 3), v["rule_id"]))
     if not sus:
         A("本店未发现疑似违规项。")
     for v in sus:
@@ -149,7 +152,12 @@ def render(skill_dir, out_dir, slug):
         A("### %s %s" % (r["id"], r["title"]))
         A("")
         A("- 结论：**%s**（置信度 %s，%s）"
-          % (v["verdict"], v["confidence"], SEV_LABEL.get(r.get("severity"), r.get("severity"))))
+          % (v["verdict"], v["confidence"],
+             SEV_LABEL.get(effective_severity(r, v), effective_severity(r, v))))
+        if effective_severity(r, v) != r.get("severity"):
+            A("- 等级说明：本条规则库等级为「%s」，本次只发现披露不充分、未发现实质违反，按「%s」处理。"
+              % (SEV_LABEL.get(r.get("severity"), r.get("severity")),
+                 SEV_LABEL.get(effective_severity(r, v), effective_severity(r, v))))
         A("- 条号：%s · 来源 %s" % (r.get("section"), r.get("source_url")))
         if r.get("quote"):
             A("- 原文：“%s”" % r["quote"])

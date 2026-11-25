@@ -1,7 +1,7 @@
 ---
 name: app-store-listing-compliance
 description: "用公开证据逐条判 iOS App 是否违反 Apple App Review Guidelines 与上架页要求（分级、订阅披露、隐私标签、DSA 交易者、第三方 AI 共享）。Use when asked 查 App Store 合规风险 / 会不会被拒审 / 订阅披露够不够 / 隐私标签与政策是否一致."
-version: 1.0.0
+version: 1.1.0
 author: shiftu
 platforms: [macos, linux]
 prerequisites:
@@ -142,6 +142,14 @@ scripts/verify_quotes.py        引文逐字闸门
 scripts/refresh_sources.sh      官方页复核
 _logs/fetch_<date>.jsonl        规则库自身的抓取留痕
 ```
+
+## v1.1 变更（2026-11-24）
+
+- 取数：隐私政策链接按锚文本识别（不再把 Apple 的 Cookie 页或 Google 站内链接当成开发者政策；`docs.google.com` 上的文档算开发者政策）；JS 渲染的政策页用 `tinyfish` 取正文（`RENDER_FALLBACK=0` 关闭）；Play 的条款链接从描述正文里找；支持两段式包名。
+- 预抽取事实：`listing.json` 新增 `facts`，判定前先给模型一张确定性的表。
+- 判定：漏判的规则自动补判（`JUDGE_ATTEMPTS`，默认共 2 轮）；证据不过逐字校验的结论自动降为 `无法从外部判断`（`demoted_from`）。
+- 等级：结论可带 `severity_override` 把等级往轻调；已下架的应用风险等级显示 `⚫ 已下架`。
+- 口径：见 `references/judging.md` 第 7 节与各规则的「防误报〔v1.1〕」。
 
 ## 源码仓库
 

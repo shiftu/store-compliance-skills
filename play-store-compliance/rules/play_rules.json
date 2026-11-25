@@ -158,7 +158,7 @@
       "source_url": "https://support.google.com/googleplay/android-developer/answer/9888076",
       "effective_or_updated": "页面未标注生效日期（抓取 2026-11-23）",
       "signals": "隐私政策/帮助页的网页删号 URL（免登录、非 PDF、点名 App 与删除范围）；Play Console 专用字段 → console_only。",
-      "false_positive_notes": "仅游客使用的应用不适用；网页删号页 404 属实质缺失。｜防误报：应用内已有删号入口时，网页入口仍必须存在（政策要求双通道）；URL 需登录才可见即不合规",
+      "false_positive_notes": "仅游客使用的应用不适用；网页删号页 404 属实质缺失。｜防误报：应用内已有删号入口时，网页入口仍必须存在（政策要求双通道）；URL 需登录才可见即不合规｜〔v1.1〕先看「预抽取事实」data_safety.deletion_statement：写「You can request that data be deleted」说明后台已填删除入口 → 符合（中）；写「Data can’t be deleted」且应用有账号体系 → 不符合；没有该声明 → 无法从外部判断。隐私政策里没贴网页删号链接不是违规依据。",
       "route": [
         "script",
         "human_only"
@@ -221,7 +221,7 @@
       "source_url": "https://support.google.com/googleplay/android-developer/answer/9900533",
       "effective_or_updated": "页面未标注生效日期（抓取 2026-11-23）",
       "signals": "描述与订阅说明的四要素：价格、周期、自动续订、取消方式；缺哪项记 absent。购买流程内文案 → binary_only。",
-      "false_positive_notes": "Play 商店页会显示内购价格，但描述仍需说明自动续订；只有描述暗示「一次性购买」才算误导。｜防误报：价格只在应用内展示在部分品类可接受；Play 静态页不含内购价格区间是取数限制，不是缺失证据",
+      "false_positive_notes": "Play 商店页会显示内购价格，但描述仍需说明自动续订；只有描述暗示「一次性购买」才算误导。｜防误报：价格只在应用内展示在部分品类可接受；Play 静态页不含内购价格区间是取数限制，不是缺失证据｜〔v1.1〕订阅价格、续订与取消方式的披露要求针对应用内购买页；描述写得简略 → 无法从外部判断。",
       "route": [
         "script",
         "human_only"
@@ -419,7 +419,7 @@
       "source_url": "https://support.google.com/googleplay/android-developer/answer/13985936",
       "effective_or_updated": "页面未标注生效日期（抓取 2026-11-23）",
       "signals": "条款中的可接受使用政策是否禁止生成受限内容；描述是否宣称「无限制/无审查」；年龄门 → binary_only。",
-      "false_positive_notes": "描述写「成人向」不等于违规；违规在于缺少防护与举报机制。｜防误报：「无审查」类营销话术是强信号；普通内容过滤说明不需要在商店页出现",
+      "false_positive_notes": "描述写「成人向」不等于违规；违规在于缺少防护与举报机制。｜防误报：「无审查」类营销话术是强信号；普通内容过滤说明不需要在商店页出现｜〔v1.1〕条款页未抓取 ≠ 没有可接受使用条款（见预抽取事实 terms_text），不得据此判不符合。",
       "route": "llm",
       "surface": "policy_page",
       "verify": "① 抓开发者隐私政策 / 条款网页；② 条款中的可接受使用政策；③ 每条结论必须落 find（原文子串）或 absent（机械确认缺失 + 说明为何算证据），并记店面/语言/抓取日",
@@ -445,7 +445,7 @@
       "source_url": "https://support.google.com/googleplay/android-developer/answer/9888077",
       "effective_or_updated": "页面未标注生效日期（2026-10-29 公告澄清含操纵审核流程）",
       "signals": "标题/描述的功能宣称 vs 截图与实机；「100% 准确」「真人占卜师」等不可验证话术；评论中的「和描述不符」。",
-      "false_positive_notes": "营销修辞（「最懂你」）不等于功能欺骗；看是否有可证伪的功能性宣称。｜防误报：占星类用「insights/guidance」不违规，用「guaranteed accurate predictions」才是虚假陈述",
+      "false_positive_notes": "营销修辞（「最懂你」）不等于功能欺骗；看是否有可证伪的功能性宣称。｜防误报：占星类用「insights/guidance」不违规，用「guaranteed accurate predictions」才是虚假陈述｜〔v1.1〕用户评论只能当线索写进 note，不能作为 find 证据；外部广告素材没抓到 → 无法从外部判断。描述与同页 Data safety 申报直接矛盾（如「绝不共享」对「与第三方共享」）可以判不符合，两处都给 find。",
       "route": "script",
       "surface": "store_page",
       "verify": "① 抓商店产品页（US + 一个 EU 店面）；② 描述宣称的功能 vs 截图；③ 每条结论必须落 find（原文子串）或 absent（机械确认缺失 + 说明为何算证据），并记店面/语言/抓取日",
@@ -539,7 +539,7 @@
       "source_url": "https://support.google.com/googleplay/android-developer/answer/9898842",
       "effective_or_updated": "页面未标注生效日期（抓取 2026-11-23）",
       "signals": "描述中的关键词堆砌、与其他 App 的对比、未署名用户证言、联系信息与 URL 堆叠。",
-      "false_positive_notes": "列举功能关键词本身合法；关键词块、词表、与其他应用对比表格是典型违规。",
+      "false_positive_notes": "列举功能关键词本身合法；关键词块、词表、与其他应用对比表格是典型违规。｜〔v1.1〕同一矛盾只在一条规则判不符合（描述 vs Data safety 的矛盾归 GP-DEC-01-METADATA）。结尾一两行关键词不算堆砌；用户评论不能当证据。",
       "route": "script",
       "surface": "store_page",
       "verify": "① 抓商店产品页（US + 一个 EU 店面）；② 描述中的关键词堆砌、无关应用对比、匿名用户证言（未署名推荐语）；③ 每条结论必须落 find（原文子串）或 absent（机械确认缺失 + 说明为何算证据），并记店面/语言/抓取日",
@@ -773,7 +773,7 @@
       "source_url": "https://support.google.com/googleplay/android-developer/answer/9878878",
       "effective_or_updated": "页面未标注生效日期（抓取 2026-11-23）",
       "signals": "描述中的治疗/治愈/替代药物/临床验证宣称；是否紧跟免责声明。",
-      "false_positive_notes": "情绪支持、冥想、心理自助不含疗效宣称时合规；「改善焦虑」等表述按语境判断。",
+      "false_positive_notes": "情绪支持、冥想、心理自助不含疗效宣称时合规；「改善焦虑」等表述按语境判断。｜〔v1.1〕占卜、冥想、情绪陪伴类措辞不算医疗声明；只有描述出现可验证的医疗功效或诊断宣称才判不符合，否则不适用或无法从外部判断。",
       "route": "script",
       "surface": "store_page",
       "verify": "① 抓商店产品页（US + 一个 EU 店面）；② 描述中的「治疗」「治愈」「替代药物」「临床验证」等宣称；③ 每条结论必须落 find（原文子串）或 absent（机械确认缺失 + 说明为何算证据），并记店面/语言/抓取日",
@@ -800,7 +800,7 @@
       "source_url": "https://support.google.com/googleplay/android-developer/answer/9876937",
       "effective_or_updated": "页面未标注生效日期（抓取 2026-11-23）",
       "signals": "用户协议/社区规范是否声明审核与举报责任；应用内举报、屏蔽入口 → binary_only。",
-      "false_positive_notes": "无用户间内容流通的产品不适用；AI 角色对话是否算 UGC 存在灰区，按最保守口径补齐举报即可。",
+      "false_positive_notes": "无用户间内容流通的产品不适用；AI 角色对话是否算 UGC 存在灰区，按最保守口径补齐举报即可。｜〔v1.1〕条款页未抓取 ≠ 没有条款（见预抽取事实 terms_text），不得以「没有公开条款」判不符合；举报/屏蔽入口在应用内 → 无法从外部判断。",
       "route": [
         "llm",
         "human_only"

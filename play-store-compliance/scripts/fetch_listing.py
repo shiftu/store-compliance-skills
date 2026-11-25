@@ -21,6 +21,9 @@ import argparse
 import html
 import json
 import os
+import socket
+import shutil
+import subprocess
 import re
 import sys
 import time
@@ -175,8 +178,12 @@ class Fetcher:
                 if attempt < retries:
                     time.sleep(1.5 + attempt)
                     continue
-                self.log(url, "blocked", used_for, "network: %s" % e.__class__.__name__)
-                return {"http": None, "final_url": url, "body": b"", "bytes": 0}
+                reason = getattr(e, "reason", e)
+                dns = isinstance(reason, socket.gaierror)
+                self.log(url, "blocked", used_for,
+                         "network: %s%s" % (e.__class__.__name__, " (DNS 无法解析)" if dns else ""))
+                return {"http": None, "final_url": url, "body": b"", "bytes": 0,
+                        "error": "dns" if dns else "network"}
 
         status = "ok" if http_code and 200 <= http_code < 300 else (
             "delisted" if http_code in (404, 410) else "blocked")
@@ -195,6 +202,150 @@ class Fetcher:
         with open(dest, "w", encoding="utf-8") as fh:
             fh.write(txt)
         return txt
+
+
+# ---------------------------------------------------------------- 政策页抓取（含 JS 渲染兜底）
+THIN_TEXT = 400          # 可见文本少于这个字数，视为单页应用空壳
+
+def _is_google_internal(href):
+    """Google 自家站内链接不算开发者的政策；但 docs / sites / drive 上的文档是开发者自己放的，要算。"""
+    low = (href or "").lower()
+    host = re.sub(r"^https?://", "", low).split("/")[0]
+    if host in ("docs.google.com", "sites.google.com", "drive.google.com"):
+        return False
+    return host.endswith("google.com") or "gstatic" in host
+
+
+def render_fallback(fx, url, dest_txt, used_for):
+    """静态抓取只拿到空壳时，用 tinyfish 取渲染后的正文（没装或失败就返回 None）。"""
+    if os.environ.get("RENDER_FALLBACK", "1") == "0" or not shutil.which("tinyfish"):
+        return None
+    fx.requests += 1
+    try:
+        out = subprocess.run(["tinyfish", "fetch", "content", "get", "--format", "markdown", url],
+                             capture_output=True, text=True, timeout=120).stdout
+        res = (json.loads(out).get("results") or [{}])[0]
+        text = (res.get("text") or "").strip()
+    except Exception as e:
+        fx.log(url, "blocked", used_for + "（渲染兜底）", "tinyfish: %s" % e.__class__.__name__)
+        return None
+    if len(text) < THIN_TEXT:
+        fx.log(url, "empty", used_for + "（渲染兜底）", "tinyfish 正文 %d 字" % len(text))
+        return None
+    fx.log(url, "ok", used_for + "（渲染兜底）", "tinyfish 正文 %d 字" % len(text))
+    with open(dest_txt, "w", encoding="utf-8") as fh:
+        fh.write(text + "\n")
+    return text
+
+
+def fetch_policy(fx, listing, raw_dir, slug, kind, url, label):
+    """抓一份政策/条款页，返回 links[kind] 条目。空壳页走渲染兜底；仍拿不到就标 thin。"""
+    entry = {"url": url, "present": bool(url), "http": None, "file": None, "pdf": False}
+    if not url:
+        listing["missing"].append(kind)
+        return entry
+    if "docs.google.com/document" in url and "/pub" not in url:
+        # 编辑链接抓到的是登录/编辑器外壳，改用纯文本导出
+        m = re.search(r"/document/d/([\w-]+)", url)
+        if m:
+            entry["fetched_as"] = "https://docs.google.com/document/d/%s/export?format=txt" % m.group(1)
+    ext = ".pdf" if url.lower().split("?")[0].endswith(".pdf") else ".html"
+    raw_f = os.path.join(raw_dir, "%s_%s%s" % (slug, kind, ext))
+    r = fx.get(entry.get("fetched_as") or url, raw_f, label)
+    entry["http"], entry["pdf"] = r["http"], ext == ".pdf"
+    if r.get("error"):
+        entry["error"] = r["error"]
+    if not r["body"]:
+        return entry
+    if ext == ".pdf":
+        entry["file"] = "_raw/%s_%s%s" % (slug, kind, ext)
+    else:
+        txt_f = os.path.join(raw_dir, "%s_%s.txt" % (slug, kind))
+        body = r["body"].decode("utf-8", "ignore")
+        text = body if entry.get("fetched_as") else None
+        if text is not None:
+            with open(txt_f, "w", encoding="utf-8") as fh:
+                fh.write(text.strip() + "\n")
+        else:
+            text = fx.write_text(txt_f, body)
+        if len(text.strip()) < THIN_TEXT and r["http"] == 200:
+            rendered = render_fallback(fx, url, txt_f, label)
+            if rendered:
+                entry["rendered"] = True
+                text = rendered
+            else:
+                entry["thin"] = True       # 只有空壳：正文没取到，不能当作「政策里没写」
+                listing["notes"].append("%s 页只取到 %d 字（疑似 JS 渲染），正文未取到" % (label, len(text.strip())))
+        entry["chars"] = len(text.strip())
+        entry["file"] = "_raw/%s_%s.txt" % (slug, kind)
+    listing["evidence_files"].append({"file": entry["file"], "url": url, "kind": kind})
+    return entry
+
+
+# ---------------------------------------------------------------- 预抽取事实（给模型一张确定性的表）
+APPLE_LABEL_CATS = ["Contact Info", "Health & Fitness", "Financial Info", "Location", "Sensitive Info",
+                    "Contacts", "User Content", "Browsing History", "Search History", "Identifiers",
+                    "Purchases", "Usage Data", "Diagnostics", "Surroundings", "Body", "Other Data"]
+AI_VENDORS = (r"OpenAI|ChatGPT|Anthropic|Claude|Gemini|Vertex AI|Google Cloud AI|Azure OpenAI|Microsoft Azure|"
+              r"ElevenLabs|DeepSeek|Mistral|Replicate|Stability AI|Suno|fal\.ai|Together AI|Groq|"
+              r"Amazon Bedrock|Perplexity|xAI|Grok|Cohere|Hugging ?Face|Deepgram|AssemblyAI")
+
+
+def extract_facts(app_dir, listing):
+    """从已抓到的文本里机械抽取几项事实，写进 listing['facts']。每项都带来源文件。"""
+    facts = {}
+
+    def read(rel):
+        p = os.path.join(app_dir, rel) if rel else None
+        return open(p, encoding="utf-8", errors="replace").read() if p and os.path.exists(p) else ""
+
+    links = listing.get("links") or {}
+    priv = links.get("privacy") or {}
+    pol = read(priv.get("file")) if not priv.get("thin") else ""
+    facts["policy_text"] = {"file": priv.get("file"), "chars": len(pol.strip()),
+                            "usable": bool(pol.strip()) and not priv.get("thin"),
+                            "note": None if pol.strip() and not priv.get("thin")
+                            else "隐私政策正文未取到：凡是依赖政策内容的规则只能判「无法从外部判断」"}
+    terms = links.get("terms") or links.get("eula") or {}
+    facts["terms_text"] = {"file": terms.get("file"), "url": terms.get("url"),
+                           "usable": bool(terms.get("file")) and not terms.get("thin"),
+                           "note": None if terms.get("file") else
+                           "条款页未抓取（商店页没有可识别的条款链接）≠ 应用没有条款，不得据此判违规"}
+    if pol.strip():
+        named = sorted(set(m.group(0) for m in re.finditer(AI_VENDORS, pol)))
+        mentions_ai = bool(re.search(r"\bAI\b|artificial intelligence|language model|\bLLMs?\b|machine learning", pol))
+        facts["ai_vendors_named_in_policy"] = {"file": priv.get("file"), "named": named,
+                                               "policy_mentions_ai": mentions_ai}
+    if listing["store"] == "apple_app_store":
+        us = (listing.get("pages") or {}).get("us") or {}
+        lab = us.get("privacy_label") or ""
+        lines = [x.strip() for x in lab.split("\n")]
+        facts["privacy_label"] = {
+            "file": us.get("text_file"),
+            "no_data_collected": "does not collect any data" in lab,
+            "categories_declared": [c for c in APPLE_LABEL_CATS if c in lines],
+            "has_tracking_section": "Data Used to Track You" in lab,
+            "has_linked_section": "Data Linked to You" in lab}
+        eu = {}
+        for cc in listing.get("countries") or []:
+            if cc == "us":
+                continue
+            eu[cc] = "listed" if cc in (listing.get("pages") or {}) else "not_listed_or_not_fetched"
+        facts["other_storefronts"] = eu
+    else:
+        us = (listing.get("pages") or {}).get("us") or {}
+        ds_file = (us.get("data_safety") or {}).get("file")
+        ds = read(ds_file)
+        if ds:
+            m = re.search(r"(You can request that data be deleted|Data can’t be deleted|Data can't be deleted)", ds)
+            n = re.search(r"(No data shared with third parties|This app may share these data types with third parties)", ds)
+            c = re.search(r"(No data collected|This app may collect these data types)", ds)
+            facts["data_safety"] = {"file": ds_file,
+                                    "deletion_statement": m.group(1) if m else None,
+                                    "sharing_statement": n.group(1) if n else None,
+                                    "collection_statement": c.group(1) if c else None}
+    listing["facts"] = facts
+    return facts
 
 
 # ---------------------------------------------------------------- Apple
@@ -295,7 +446,13 @@ def apple_collect(fx, app_id, slug, countries, app_dir):
         m = re.search(r"\nContains\n(.*?)(?:\nIn-App Purchases|\nLanguages|\nInformation)", text, re.S)
         page["contains"] = [x.strip() for x in (m.group(1).split("\n") if m else []) if x.strip()][:10]
         i = text.find("App Privacy")
-        page["privacy_label"] = text[i:i + 2500] if i >= 0 else None
+        if i >= 0:
+            tail = text[i:i + 6000]
+            m_end = re.search(r"\n(?:Accessibility|Information|Ratings (?:and|&) Reviews|What’s New|"
+                              r"More By This Developer|You Might Also Like)\n", tail[20:])
+            page["privacy_label"] = tail[:m_end.start() + 20] if m_end else tail[:4000]
+        else:
+            page["privacy_label"] = None
         page["seller_line"] = line_after(text, "Seller", 1)
         page["subtitle"] = None
         lines = [x.strip() for x in text.split("\n") if x.strip()]
@@ -306,12 +463,17 @@ def apple_collect(fx, app_id, slug, countries, app_dir):
         for href, label in links:
             key = None
             low = (href or "").lower()
-            if "apple.com/legal" in low or "policies.google" in low:
-                continue
-            if re.search(r"privacy|privacypolicy|privacy-policy", low) and key is None:
+            host = re.sub(r"^https?://", "", low).split("/")[0]
+            if not low.startswith("http") or host.endswith("apple.com") or "policies.google" in low:
+                continue                      # Apple 自家的 Cookie / 法律页不是开发者的政策
+            lab = (label or "").strip().lower()
+            if "privacy policy" in lab or re.search(r"privacy|privacypolicy|privacy-policy", low):
                 key = "privacy"
-            elif re.search(r"eula|terms|termsofuse|terms-of-use", low) and key is None:
+            elif lab in ("license agreement", "terms of use", "terms of service") or \
+                    re.search(r"eula|terms|termsofuse|terms-of-use", low):
                 key = "eula"
+            elif lab in ("app support", "developer website"):
+                key = "support" if lab == "app support" else None
             if key and key not in page["links"]:
                 page["links"][key] = href
         listing.setdefault("pages", {})[cc] = page
@@ -321,14 +483,20 @@ def apple_collect(fx, app_id, slug, countries, app_dir):
             field("age_rating", page["age_rating"], page["text_file"], "产品页 Age Rating 行")
             field("contains", page["contains"], page["text_file"], "产品页 Contains 行")
             field("iap_items", page["iap_items"], page["text_file"], "产品页 In-App Purchases 区")
-            field("privacy_label_text", (page["privacy_label"] or "")[:1200], page["text_file"],
+            field("privacy_label_text", (page["privacy_label"] or "")[:4000], page["text_file"],
                   "产品页 App Privacy 段")
 
     us_page = (listing.get("pages") or {}).get("us") or {}
     eu = [cc for cc in countries if cc != "us"]
     eu_page = (listing.get("pages") or {}).get(eu[0]) if eu else None
+    if eu and not eu_page:
+        st = "_raw/%s_appstore_%s.status" % (slug, eu[0])
+        field("trader_block", {"cc": eu[0], "listed": False,
+                               "status_file": st if os.path.exists(os.path.join(app_dir, st)) else None},
+              None, "EU 店面产品页未取到")
     if eu_page:
         field("trader_block", {
+            "listed": True,
             "cc": eu_page["cc"],
             "has_anbieter": bool(re.search(r"\bAnbieter\b", open(
                 os.path.join(app_dir, eu_page["text_file"]), encoding="utf-8").read())),
@@ -343,26 +511,7 @@ def apple_collect(fx, app_id, slug, countries, app_dir):
                 "许可协议 / EULA 页"),
                ("support", link_src.get("support"), "App 支持页")]
     for kind, url, label in targets:
-        entry = {"url": url, "present": bool(url), "http": None, "file": None}
-        if url:
-            ext = ".pdf" if url.lower().split("?")[0].endswith(".pdf") else ".html"
-            raw_f = os.path.join(raw_dir, "%s_%s%s" % (slug, kind, ext))
-            r = fx.get(url, raw_f, label)
-            entry["http"] = r["http"]
-            entry["pdf"] = ext == ".pdf"
-            if r["body"] and ext == ".html":
-                txt_f = os.path.join(raw_dir, "%s_%s.txt" % (slug, kind))
-                fx.write_text(txt_f, r["body"].decode("utf-8", "ignore"))
-                entry["file"] = "_raw/%s_%s.txt" % (slug, kind)
-                listing["evidence_files"].append(
-                    {"file": entry["file"], "url": url, "kind": kind})
-            elif r["body"]:
-                entry["file"] = "_raw/%s_%s%s" % (slug, kind, ext)
-                listing["evidence_files"].append(
-                    {"file": entry["file"], "url": url, "kind": kind})
-        else:
-            listing["missing"].append(kind)
-        listing["links"][kind] = entry
+        listing["links"][kind] = fetch_policy(fx, listing, raw_dir, slug, kind, url, label)
     return listing
 
 
@@ -430,14 +579,13 @@ def play_collect(fx, package, slug, countries, app_dir):
         page["links"], page["link_labels"] = {}, {}
         for href, label in links:
             low = (href or "").lower()
-            if not href or href.startswith("/") or "google.com" in low or "gstatic" in low:
+            if not href or not low.startswith("http") or _is_google_internal(href):
                 continue
-            if "privacy" in low and "privacy" not in page["links"]:
+            lab = (label or "").strip().lower()
+            # 应用自己的隐私政策链接：锚文本以「Privacy Policy」结尾（前面带图标名 shield）
+            if lab.endswith("privacy policy") and "privacy" not in page["links"]:
                 page["links"]["privacy"] = href
-                page["link_labels"]["privacy"] = label
-            elif re.search(r"terms|tos|eula", low) and "terms" not in page["links"]:
-                page["links"]["terms"] = href
-                page["link_labels"]["terms"] = label
+                page["link_labels"]["privacy"] = "Privacy Policy"
         i = text.find("Data safety")
         page["data_safety_summary"] = text[i:i + 400] if i >= 0 else None
         m = re.search(r"\nAbout this app\n(.*?)(?:\nData safety\n|\nApp support\n|\nRatings and reviews\n|\nUpdated on\n)", text, re.S)
@@ -509,27 +657,20 @@ def play_collect(fx, package, slug, countries, app_dir):
                                           "kind": "description"})
     else:
         listing["missing"].append("description")
-    # 隐私政策 / 条款页
+    # 隐私政策 / 条款页。Play 没有条款字段：条款链接只能从描述正文里找
     us_page = listing["pages"].get("us") or {}
-    for kind, url, label in (("privacy", us_page.get("links", {}).get("privacy"), "隐私政策页"),
-                             ("terms", us_page.get("links", {}).get("terms"), "服务条款页")):
-        entry = {"url": url, "present": bool(url), "http": None, "file": None, "pdf": False}
-        if url:
-            ext = ".pdf" if url.lower().split("?")[0].endswith(".pdf") else ".html"
-            raw_f = os.path.join(raw_dir, "%s_%s%s" % (slug, kind, ext))
-            r = fx.get(url, raw_f, label)
-            entry["http"], entry["pdf"] = r["http"], ext == ".pdf"
-            if r["body"]:
-                if ext == ".html":
-                    txt_f = os.path.join(raw_dir, "%s_%s.txt" % (slug, kind))
-                    fx.write_text(txt_f, r["body"].decode("utf-8", "ignore"))
-                    entry["file"] = "_raw/%s_%s.txt" % (slug, kind)
-                else:
-                    entry["file"] = "_raw/%s_%s%s" % (slug, kind, ext)
-                listing["evidence_files"].append({"file": entry["file"], "url": url, "kind": kind})
-        else:
-            listing["missing"].append(kind)
-        listing["links"][kind] = entry
+    desc_urls = re.findall(r"https?://[^\s)>\]]+", desc)
+    plinks = us_page.setdefault("links", {})
+    for u in desc_urls:
+        lu = u.lower().rstrip(".,")
+        if re.search(r"terms|/tos\b|eula|conditions", lu) and "terms" not in plinks:
+            plinks["terms"] = u.rstrip(".,")
+        elif "privacy" in lu and "privacy" not in plinks:
+            plinks["privacy"] = u.rstrip(".,")
+            listing["notes"].append("隐私政策链接取自描述正文（商店页「Privacy Policy」入口未识别到）")
+    for kind, url, label in (("privacy", plinks.get("privacy"), "隐私政策页"),
+                             ("terms", plinks.get("terms"), "服务条款页")):
+        listing["links"][kind] = fetch_policy(fx, listing, raw_dir, slug, kind, url, label)
     return listing
 
 
@@ -545,8 +686,8 @@ def ev(file, find=None, absent=None, note=None):
     return d
 
 
-def V(verdict, conf, evidence, note):
-    return {"verdict": verdict, "confidence": conf, "evidence": evidence, "note": note}
+def V(verdict, conf, evidence, note, **extra):
+    return dict({"verdict": verdict, "confidence": conf, "evidence": evidence, "note": note}, **extra)
 
 
 def _page_text(app_dir, listing, cc="us"):
@@ -631,9 +772,20 @@ def check_privacy_link(app_dir, listing):
         return V("无法从外部判断", "中",
                  [ev(f, absent="Privacy Policy", note="页面文本未见隐私政策行；渲染丢行与真缺失无法区分")],
                  "产品页未见隐私政策链接，需浏览器/后台核对。")
+    if priv.get("error") == "dns":
+        return V("不符合", "高", [ev(f, find="Privacy Policy")],
+                 "产品页的隐私政策链接 %s 域名无法解析（DNS 查不到），用户点开是死链。" % priv.get("url"))
+    if priv.get("http") is None:
+        return V("无法从外部判断", "中", [ev(f, find="Privacy Policy")],
+                 "产品页有隐私政策链接 %s，但本次抓取网络失败（超时/连接被拒），未检查，需重试或人工打开确认。"
+                 % priv.get("url"))
     if priv.get("http") != 200:
         return V("不符合", "高", [ev(f, find="Privacy Policy")],
-                 "产品页有隐私政策链接，但目标页 HTTP=%s（非 200）。" % priv.get("http"))
+                 "产品页有隐私政策链接 %s，但目标页 HTTP=%s（非 200）。" % (priv.get("url"), priv.get("http")))
+    if priv.get("thin"):
+        return V("无法从外部判断", "中", [ev(f, find="Privacy Policy")],
+                 "产品页有隐私政策链接 %s（HTTP 200），但页面是 JS 渲染，正文未取到，内容需人工打开确认。"
+                 % priv.get("url"))
     pol_file = priv.get("file")
     named = False
     if pol_file:
@@ -648,14 +800,25 @@ def check_dsa_trader(app_dir, listing):
     tb = listing["fields"].get("trader_block", {})
     v = tb.get("value") or {}
     f = tb.get("source") or "_raw/%s_appstore_us.txt" % listing["slug"]
-    if not f:
+    if not v:
         return None
+    if v.get("listed") is False:
+        if v.get("status_file"):
+            return V("不适用", "高", [ev(v["status_file"], find="HTTP 404")],
+                     "该应用在 EU 店面（%s）返回 404，即未在该店面上架；商品页不存在，交易者信息展示要求无从适用。"
+                     "（未上架的原因外部不可见，可能是未申报交易者身份，也可能是开发者自行不发 EU。）" % v.get("cc"))
+        return V("无法从外部判断", "中",
+                 [ev("_raw/%s_appstore_us.txt" % listing["slug"], absent="Anbieter",
+                     note="EU 店面页面本次未抓到，US 页不展示交易者块")],
+                 "EU 店面（%s）产品页本次抓取失败，未检查交易者信息，需重试。" % v.get("cc"))
     if v.get("has_anbieter"):
         return V("符合", "高", [ev(f, find="Anbieter")],
                  "EU 店面（%s）产品页出现「Anbieter」交易者块%s。"
                  % (v.get("cc"), "，含 DUNS" if v.get("has_duns") else "（未见 DUNS 行）"))
-    return V("不符合", "中", [ev(f, find="Weitere Infos")],
-             "EU 店面产品页未见「Anbieter」交易者信息块，DSA 第 30(2) 条要求交易者信息在商品页展示。")
+    return V("不符合", "中",
+             [ev(f, absent="Anbieter", note="EU 店面页面已抓到，但全文没有「Anbieter」交易者信息块")],
+             "EU 店面产品页已取到但未见「Anbieter」交易者信息块，DSA 第 30(2) 条要求交易者信息在商品页展示。",
+             absence_only_violation=True)
 
 
 def check_kids_category(app_dir, listing):
@@ -798,19 +961,29 @@ def check_play_privacy(app_dir, listing):
     priv = (listing.get("links") or {}).get("privacy") or {}
     if not f:
         return None
+    anchor = "Privacy Policy" if "Privacy Policy" in text else "Data safety"
     if not priv.get("present"):
-        return V("不符合", "中", [ev(f, absent="privacy", note="商店页无可点击的隐私政策链接（第三方域名）")],
-                 "Play 页未找到应用自己的隐私政策链接（只找到 Google 站内链接，不算）。")
+        return V("无法从外部判断", "中",
+                 [ev(f, absent="shieldPrivacy Policy",
+                     note="商店页「App support」区未识别到开发者的 Privacy Policy 入口；页面结构变动也会导致识别不到")],
+                 "未在 Play 商店页识别到开发者的隐私政策链接，需在浏览器里确认「App support → Privacy Policy」是否存在。")
+    url = priv.get("url") or ""
+    if priv.get("error") == "dns":
+        return V("不符合", "高", [ev(f, find=anchor)], "隐私政策链接 %s 域名无法解析，是死链。" % url)
+    if priv.get("http") is None:
+        return V("无法从外部判断", "中", [ev(f, find=anchor)],
+                 "隐私政策链接 %s 本次抓取网络失败，未检查。" % url)
     if priv.get("http") != 200:
-        return V("不符合", "高", [ev(f, find="privacy")],
-                 "隐私政策链接存在但目标页 HTTP=%s。" % priv.get("http"))
+        return V("不符合", "高", [ev(f, find=anchor)],
+                 "隐私政策链接 %s 存在但目标页 HTTP=%s。" % (url, priv.get("http")))
     if priv.get("pdf"):
-        return V("不符合", "中", [ev(f, find="privacy")], "隐私政策以 PDF 提供，不满足可访问性要求。")
-    label = ((listing.get("pages") or {}).get("us", {}).get("link_labels") or {}).get("privacy") or "Data safety"
-    if label not in text:
-        label = "Data safety"
-    return V("符合", "高", [ev(f, find=label)],
-             "商店页有应用自有隐私政策链接 %s，HTTP=200（应用内是否另有入口需实机）。" % priv.get("url"))
+        return V("不符合", "中", [ev(f, find=anchor)], "隐私政策以 PDF 提供，不满足可访问性要求。")
+    if "docs.google.com/document" in url and "/edit" in url:
+        return V("不符合", "中", [ev(f, find=anchor)],
+                 "隐私政策链接是 Google Docs 的编辑链接（%s）：Play 要求政策放在可公开访问、不可被随意编辑的 URL 上，"
+                 "编辑链接不满足；应换成自有域名页面或「发布到网络」的只读链接。" % url)
+    return V("符合", "高", [ev(f, find=anchor)],
+             "商店页有应用自有隐私政策链接 %s，HTTP=200（应用内是否另有入口需实机）。" % url)
 
 
 def check_data_safety(app_dir, listing):
@@ -859,16 +1032,24 @@ def check_play_families(app_dir, listing):
 
 
 def check_play_health(app_dir, listing):
-    f, text = _page_text(app_dir, listing)
+    """只看描述正文；证据用真正命中的词。免责声明可能在应用内，外部缺失不构成违规。"""
+    f, text = _desc_text(app_dir, listing)
     if not f:
         return None
-    if not _has(text, r"health", r"medical", r"therapy", r"mental", r"symptom"):
-        return V("不适用", "中", [ev(f, absent="medical device", note="页面无健康/医疗表述")],
-                 "商店页与描述无健康或医疗表述，健康政策前提不成立。")
-    if _has(text, r"not a medical device", r"consult (?:a|your) (?:doctor|physician)", r"professional help"):
-        return V("符合", "中", [ev(f, find="consult")], "有健康表述且含免责/就医提示。")
-    return V("不符合", "中", [ev(f, find="health")],
-             "出现健康表述但描述中未见「非医疗器械」或提示就医的免责声明（GP-HEALTH-02）。")
+    m = re.search(r"\b(health(?:care)?|medical|therap(?:y|ist|ists)|mental health|symptoms?|diagnos\w+|"
+                  r"treatment|blood pressure|heart rate|calorie\w*|weight loss)\b", text, re.I)
+    if not m:
+        return V("不适用", "中", [ev(f, absent="medical", note="描述正文无健康/医疗表述")],
+                 "描述正文无健康或医疗表述，健康类政策前提不成立。")
+    d = re.search(r"(not a medical device|not (?:a substitute|intended) for (?:professional )?medical|"
+                  r"consult (?:a|your) (?:doctor|physician|healthcare)|seek professional help|"
+                  r"for entertainment purposes only)", text, re.I)
+    if d:
+        return V("符合", "中", [ev(f, find=m.group(0)), ev(f, find=d.group(0))],
+                 "描述有健康相关表述「%s」，并带免责/就医提示。" % m.group(0))
+    return V("无法从外部判断", "中", [ev(f, find=m.group(0))],
+             "描述有健康相关表述「%s」，描述里未见「非医疗器械 / 请咨询医生」类免责声明；"
+             "免责声明也可以放在应用内，需实机确认。建议在描述里补一句。" % m.group(0))
 
 
 def check_play_billing(app_dir, listing):
@@ -929,7 +1110,6 @@ PLAY_CHECKS = {
     "GP-RATE-01-IARC": check_play_rating,
     "GP-FAM-01-FAMILIES": check_play_families,
     "GP-HEALTH-02-DISCLAIMER": check_play_health,
-    "GP-HEALTH-01-CLAIMS": check_play_health,
     "GP-PAY-01-BILLING": check_play_billing,
     "GP-AGE-01-BLOCK-MINORS": check_play_age_gate,
 }
@@ -976,7 +1156,7 @@ def detect_store(target):
     m = re.search(r"[?&]id=([A-Za-z0-9_.]+)", t)
     if m and "play.google" in t:
         return "play", m.group(1)
-    if re.match(r"^[A-Za-z][A-Za-z0-9_]*(\.[A-Za-z0-9_]+){2,}$", t):
+    if re.match(r"^[A-Za-z][A-Za-z0-9_]*(\.[A-Za-z][A-Za-z0-9_]*)+$", t):
         return "play", t
     return None, t
 
@@ -1012,6 +1192,11 @@ def main():
         listing = play_collect(fx, ident, slug, countries, app_dir)
 
     listing["fetched_on"] = date
+    if listing["status"] != "delisted":
+        try:
+            extract_facts(app_dir, listing)
+        except Exception as e:                           # 抽取失败不影响取数
+            listing["notes"].append("extract_facts failed: %s" % e)
     listing["requests"] = fx.requests
     listing["log"] = os.path.relpath(fx.log_path, a.out_dir)
 
